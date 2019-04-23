@@ -1,16 +1,11 @@
 #include <iostream>
 #include <vector>
 
-#include "MultipleResolver.h"
-#include "SingleResolver.h"
-#include "Range.hpp"
+#include "base/Range.hpp"
+
+#include "multiple/Resolver.h"
+#include "single/Resolver.h"
 #include "utils.h"
-
-template<typename TIteratorMaster, typename TIteratorSecond, typename... TIterators>
-const bool Range<TIteratorMaster,TIteratorSecond,TIterators...>::isFirst = false;
-
-template<typename TIteratorMaster, typename... TIterators>
-const bool Range<TIteratorMaster,TIterators...>::isFirst = true;
 
 void fromRange()
 {
@@ -28,7 +23,7 @@ void fromRange()
   auto e3 = v.end();
 
   auto range = addRange(b1,e1,2).addRange(b2,e2,2).addRange(b3,e3,2);
-  auto mr = createMultipleResolver(range);
+  auto mr = Multiple::createResolver(range);
 
   std::vector<Size> hops1 = {0,1};
   std::vector<Size> hops2 = {0,2};
@@ -44,7 +39,7 @@ void fromRange()
   std::vector<int> c2(2);
   std::vector<int> c3(2);
 
-  mr.solve(c1).solve(c2).solve(c3);
+  mr >> c1 >> c2 >> c3;
 
   CombinationsVector cv;
   cv.push_back(c1);cv.push_back(c2);cv.push_back(c3);

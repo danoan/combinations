@@ -37,3 +37,22 @@ target_compile_features(test-multiple-combinator PRIVATE cxx_variadic_templates)
 
 target_include_directories(test-multiple-combinator PRIVATE
 include)
+
+
+
+add_executable(test-fundamental-combinator test-fundamental-combinator.cpp src/utils.cpp)
+
+target_compile_features(test-fundamental-combinator PRIVATE cxx_variadic_templates)
+
+target_include_directories(test-fundamental-combinator PRIVATE
+        include)
+
+
+
+
+add_executable(test-large-charge test-large-charge.cpp src/utils.cpp)
+
+target_compile_features(test-large-charge PRIVATE cxx_variadic_templates)
+
+target_include_directories(test-large-charge PRIVATE
+        include)

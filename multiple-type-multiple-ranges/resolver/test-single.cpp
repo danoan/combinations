@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
 
-#include "SingleRangeCombinator.h"
-#include "Range.hpp"
+#include "base/Range.hpp"
+#include "single/Combinator.hpp"
 #include "utils.h"
 
 int main()
@@ -11,7 +11,7 @@ int main()
   unsigned long int elemsPerComb = 3;
 
   auto range = addRange(v.begin(),v.end(),elemsPerComb);
-  auto combinator = createSingleRangeCombinator(range);
+  auto combinator = Single::createCombinator(range);
   auto resolver = combinator.resolver();
 
   std::vector<int> nextComb(elemsPerComb);

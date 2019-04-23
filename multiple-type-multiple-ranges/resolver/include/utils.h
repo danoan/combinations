@@ -10,4 +10,16 @@ typedef CombinationsVector::const_iterator CombinationsIterator;
 IntVector createIntegerVector(int nelems);
 
 //Prints a combination for each line
-void printCombinations(CombinationsIterator begin,CombinationsIterator end);
+template<class TIterator>
+void printCombinations(TIterator begin, TIterator end)
+{
+    for(auto itc=begin;itc!=end;++itc)
+    {
+        for(auto iti=itc->begin();iti!=itc->end();++iti)
+        {
+            std::cout << *iti << ",";
+        }
+        std::cout << "\n";
+    }
+
+}

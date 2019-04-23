@@ -12,16 +12,3 @@ IntVector createIntegerVector(int nelems)
 
   return intVector;
 }
-
-void printCombinations(CombinationsIterator begin,
-  CombinationsIterator end)
-{
-  for(auto itc=begin;itc!=end;++itc)
-  {
-    for(auto iti=itc->begin();iti!=itc->end();++iti)
-    {
-      std::cout << *iti << ",";
-    }
-    std::cout << "\n";
-  }
-}
