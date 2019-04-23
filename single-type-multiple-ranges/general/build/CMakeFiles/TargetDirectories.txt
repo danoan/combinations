@@ -1,0 +1,4 @@
+/home/daniel/Projects/combinations/single-list/src/single-type-multiple-ranges/general/build/CMakeFiles/edit_cache.dir
+/home/daniel/Projects/combinations/single-list/src/single-type-multiple-ranges/general/build/CMakeFiles/rebuild_cache.dir
+/home/daniel/Projects/combinations/single-list/src/single-type-multiple-ranges/general/build/CMakeFiles/multiple-ranges-general.dir
+/home/daniel/Projects/combinations/single-list/src/single-type-multiple-ranges/general/build/CMakeFiles/mytest.dir
