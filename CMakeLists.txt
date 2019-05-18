@@ -10,4 +10,6 @@ add_subdirectory(modules/utils)
 add_subdirectory(modules/logger)
 add_subdirectory(modules/single-type-single-range/eager-recursive)
 
+add_subdirectory(modules/multiple-type-multiple-ranges/resolver)
+
 add_subdirectory(app/stsr/eager-recursive)
