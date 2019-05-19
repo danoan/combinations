@@ -6,7 +6,7 @@ add_dependencies(app-eager-recursive comb-utils)
 
 target_include_directories(app-eager-recursive PRIVATE
         ${CMAKE_SOURCE_DIR}/modules/utils/include
-        ${CMAKE_SOURCE_DIR}/modules/single-type-single-range/eager-recursive/include)
+        ${CMAKE_SOURCE_DIR}/modules/single-range/eager-recursive/include)
 
 target_link_libraries(app-eager-recursive
         -lcomb-utils)

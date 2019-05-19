@@ -1,6 +1,7 @@
 #ifndef COMBINATIONS_DISPLAYUTILS_H
 #define COMBINATIONS_DISPLAYUTILS_H
 
+#include <iostream>
 #include <vector>
 
 namespace Combinations

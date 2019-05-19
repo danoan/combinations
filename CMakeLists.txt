@@ -11,11 +11,11 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic")
 
 add_subdirectory(modules/utils)
 add_subdirectory(modules/logger)
-add_subdirectory(modules/single-type-single-range/eager-recursive)
-add_subdirectory(modules/single-type-single-range/lazy-recursive)
-add_subdirectory(modules/single-type-single-range/lazy-nonrecursive)
+add_subdirectory(modules/single-range/eager-recursive)
+add_subdirectory(modules/single-range/lazy-recursive)
+add_subdirectory(modules/single-range/lazy-nonrecursive)
 
-add_subdirectory(modules/multiple-type-multiple-ranges/resolver)
+add_subdirectory(modules/core)
 
 add_subdirectory(app/stsr/eager-recursive)
 add_subdirectory(app/stsr/lazy-recursive)
