@@ -9,5 +9,5 @@ target_include_directories(comb-logger PRIVATE
         ${BOOST_INCLUDE_DIRS})
 
 target_link_libraries(comb-logger
-        -lboost_filesystem
-        -lboost_system)
+        -lboost_system
+        -lboost_filesystem)

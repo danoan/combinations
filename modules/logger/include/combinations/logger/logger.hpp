@@ -21,16 +21,15 @@ namespace Combinations
             unsigned int rowLength = 2*tab + textLength;
 
             os << "\n";
-
-            for(int i=0;i<rowLength;++i) os << "#";
+            for(uint i=0;i<rowLength;++i) os << "#";
             os << "\n";
 
-            for(int i=0;i<tab;++i) os << " ";
+            for(uint i=0;i<tab;++i) os << " ";
             os << s;
-            for(int i=0;i<tab;++i) os << " ";
+            for(uint i=0;i<tab;++i) os << " ";
             os << "\n";
 
-            for(int i=0;i<rowLength;++i) os << "#";
+            for(uint i=0;i<rowLength;++i) os << "#";
             os << "\n";
 
             os << "\n";
@@ -45,9 +44,9 @@ namespace Combinations
 
             os << "\n";
 
-            for(int i=0;i<tab;++i) os << "-";
+            for(uint i=0;i<tab;++i) os << "-";
             os << s;
-            for(int i=0;i<tab;++i) os << "-";
+            for(uint i=0;i<tab;++i) os << "-";
             os << "\n";
 
             os.flush();

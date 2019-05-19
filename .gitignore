@@ -1,14 +1,5 @@
 .idea
-<<<<<<< HEAD
 output
 cmake-build-debug
 build
-=======
-cmake-build-debug
-multiple-type-multiple-ranges/.idea
-multiple-type-multiple-ranges/cmake-build-debug
-multiple-type-multiple-ranges/resolver/.idea
-multiple-type-multiple-ranges/resolver/cmake-build-debug
-
-
->>>>>>> 3b75b22cc117cc0ee64b705f4eb03b808219d071
+cmake-build-release

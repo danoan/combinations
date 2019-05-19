@@ -44,6 +44,7 @@ namespace Combinations
         Logger& Logger::operator<(FormattingType ft)
         {
             this->ft = ft;
+            return *this;
         }
 
         Logger& Logger::operator<(bool b)

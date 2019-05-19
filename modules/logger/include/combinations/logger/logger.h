@@ -61,8 +61,8 @@ namespace Combinations
             std::string buffer();
 
         private:
-            std::string outputFolder;
             std::ostream& os;
+            std::string outputFolder;
             bool exportObjectsFlag;
 
             std::stringstream ss;

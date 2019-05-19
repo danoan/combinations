@@ -27,6 +27,8 @@ namespace Combinations
                 curr.pop_back();
             }
 
+            return FAILURE;
+
         }
 
         template<class TElementType,class TElementIterator>
