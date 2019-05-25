@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "combinations/utils/mockUtils.h"
-#include "combinations/lazy-nonrecursive.h"
+#include "combinations/single-range/lazy-nonrecursive.h"
 
 using namespace Combinations;
 

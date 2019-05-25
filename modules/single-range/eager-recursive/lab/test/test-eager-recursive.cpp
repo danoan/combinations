@@ -3,45 +3,53 @@
 
 #include "combinations/logger/logger.h"
 
-#include "execution.h"
-#include "correcteness.h"
+#include "combinations/test/eager-recursive/execution.h"
+#include "combinations/test/eager-recursive/correcteness.h"
 
-using namespace Combinations::Test;
+using namespace Combinations;
+
+std::ofstream ofs;
+std::ostream& readInput(int argc,char* argv[])
+{
+    if(argc>=2)
+    {
+        std::string outputFolder = argv[1];
+        boost::filesystem::create_directories(outputFolder);
+
+        ofs = std::ofstream(outputFolder + "/log.txt");
+        return ofs;
+    }else
+    {
+        return std::cout;
+    }
+}
 
 int main(int argc, char* argv[])
 {
-    if(argc<2)
-    {
-        std::cerr << "Usage: test-eager-recursive OUTPUT_FOLDER" << std::endl;
-    }
+    std::ostream& os = readInput(argc,argv);
+    Logger logger(os,false);
 
-    std::string outputFolder = argv[1];
-    boost::filesystem::create_directories(outputFolder);
-
-    std::ofstream ofs(outputFolder + "/log.txt");
-    Logger logger(ofs,outputFolder,false);
+    logger < Logger::HeaderOne < "Test Eager Recursive" < Logger::Normal;
 
     time_t now = time(0);
-    ofs << ctime(&now) << "\n";
+    os << ctime(&now) << "\n";
 
     bool flag = true;
     try
     {
-        flag = flag && execution(10,3,logger);
-        flag = flag && execution(3,3,logger);
-        flag = flag && execution(0,3,logger);
-        flag = flag && execution(200,3,logger);
+        flag = flag && Test::execution(10,3,logger);
+        flag = flag && Test::execution(3,3,logger);
+        flag = flag && Test::execution(0,3,logger);
+        flag = flag && Test::execution(200,3,logger);
 
-        flag = flag && correcteness(logger);
+        flag = flag && Test::correcteness(logger);
     }catch(std::exception ex)
     {
             flag = false;
-            ofs << ex.what() << "\n\n";
+            os << ex.what() << "\n\n";
     }
 
-    ofs.flush();
-    ofs.close();
-
+    os.flush();
     assert(flag);
 
 

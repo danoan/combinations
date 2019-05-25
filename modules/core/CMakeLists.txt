@@ -7,6 +7,7 @@ target_include_directories(core INTERFACE
 
 if(${BUILD_TESTS})
     add_subdirectory(lab/test)
+    add_subdirectory(lab/example)
 endif()
 
 install(DIRECTORY include

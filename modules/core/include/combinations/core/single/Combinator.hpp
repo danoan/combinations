@@ -12,7 +12,7 @@
 
 namespace Combinations
 {
-    namespace MultipleRanges
+    namespace Core
     {
         namespace Single
         {
@@ -45,9 +45,9 @@ namespace Combinations
                 MyResolver resolver() { return MyResolver(); };
 
             public:
+                MyRange range;
                 FundamentalCombinator fc;
                 Hops hops;
-                MyRange range;
             };
 
             template<typename TRange>

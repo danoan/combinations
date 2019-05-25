@@ -51,28 +51,26 @@ bool Combinator<TRange>::next(MyResolver &resolver)
             {
                 if (e.cIndex >= this->numRanges)
                 {
-                    es.push(Event(Event::DONE, e.cIndex, e.itMove));
-                } else
-                {
-                    if (e.itMove != numRanges)
-                    {
-                        FundamentalCombinator &fc = fv[e.itMove];
+                    es.push(Event(Event::DONE, e.cIndex, 0));
+                } 
+                else
+                {   
+                    FundamentalCombinator &fc = fv[e.cIndex];
 
-                        if (fc.next()) {
-                            es.push(Event(Event::BRANCH, e.cIndex, e.itMove));
-                            es.push(Event(Event::DIVE, e.cIndex + 1, e.itMove + 1));
-                        } else {
-                            fc.restart();
-                        }
-
+                    if (fc.next()) {
+                        es.push(Event(Event::BRANCH, e.cIndex, 0));
+                        es.push(Event(Event::DIVE, e.cIndex + 1, 0));
+                    } else {
+                        fc.restart();
                     }
+                    
                 }
 
                 break;
             }
             case Event::BRANCH:
             {
-                es.push(Event(Event::DIVE, e.cIndex, e.itMove));
+                es.push(Event(Event::DIVE, e.cIndex, 0));
                 break;
             }
             case Event::DONE:

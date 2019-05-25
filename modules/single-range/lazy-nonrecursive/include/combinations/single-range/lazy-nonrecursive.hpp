@@ -1,4 +1,4 @@
-#include "combinations/lazy-nonrecursive.h"
+#include "lazy-nonrecursive.h"
 
 
 namespace Combinations

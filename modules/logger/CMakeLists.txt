@@ -11,3 +11,9 @@ target_include_directories(comb-logger PRIVATE
 target_link_libraries(comb-logger
         -lboost_system
         -lboost_filesystem)
+
+install(DIRECTORY include
+        DESTINATION ${CMAKE_INSTALL_PREFIX})
+
+install(TARGETS comb-logger
+        LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)

@@ -1,40 +1,48 @@
 #include <iostream>
 #include <vector>
 
-#include "combinations/core/base/Range.hpp"
+#include "combinations/test/range/correcteness.h"
 
-using namespace Combinations::MultipleRanges;
+using namespace Combinations;
 
-int main()
+std::ofstream ofs;
+std::ostream& readInput(int argc,char* argv[])
 {
-  std::vector<int> v = {1,2,3,4,5,6,7,8,9,10};
-  auto b1 = v.begin();
-  auto b2 = v.begin()+3;
-  auto b3 = v.begin()+6;
+    if(argc>=2)
+    {
+        std::string outputFolder = argv[1];
+        boost::filesystem::create_directories(outputFolder);
 
-  auto e1 = v.begin()+3;
-  auto e2 = v.begin()+6;
-  auto e3 = v.end();
+        ofs = std::ofstream(outputFolder + "/log.txt");
+        return ofs;
+    }else
+    {
+        return std::cout;
+    }
+}
 
-  auto R = addRange(b1,e1,2).addRange(b2,e2,2).addRange(b3,e3,2);
+int main(int argc, char* argv[])
+{
+    std::ostream& os = readInput(argc,argv);
+    Logger logger(os,false);
 
-  for(auto it=R.begin;it!=R.end;++it)
-  {
-    std::cout << *it << std::endl;
-  }
+    logger < Logger::HeaderOne < "Test Range" < Logger::Normal;
 
+    time_t now = time(0);
+    os << ctime(&now) << "\n";
 
-  auto previous = R.previous;
-  for(auto it=previous.begin;it!=previous.end;++it)
-  {
-    std::cout << *it << std::endl;
-  }
+    bool flag = true;
+    try
+    {
+        flag = flag && Test::correcteness(logger);
+    }catch(std::exception ex)
+    {
+        flag=false;
+        logger < "Error: " < ex.what() < "\n";
+    }
 
-  auto previous2 = previous.previous;
-  for(auto it=previous2.begin;it!=previous2.end;++it)
-  {
-    std::cout << *it << std::endl;
-  }
+    os.flush();
+    assert(flag);
 
-  return 0;
+    return 0;
 }

@@ -20,3 +20,9 @@ target_link_libraries(test-lazy-nonrecursive
         -lcomb-logger
         -lboost_system
         -lboost_filesystem)
+
+install(DIRECTORY include
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/test)
+
+install(TARGETS test-lazy-nonrecursive
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/test/bin)

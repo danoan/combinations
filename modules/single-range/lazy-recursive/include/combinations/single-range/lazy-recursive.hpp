@@ -1,4 +1,4 @@
-#include "combinations/lazy-recursive.h"
+#include "lazy-recursive.h"
 
 namespace Combinations
 {

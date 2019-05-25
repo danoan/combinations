@@ -1,56 +1,46 @@
 #include <iostream>
-#include <vector>
-
-#include "combinations/core/base/Range.hpp"
-
-#include "combinations/core/multiple/Resolver.h"
-#include "combinations/core/single/Resolver.h"
-#include "combinations/utils/displayUtils.h"
+#include "combinations/test/multiple-resolver/correcteness.h"
 
 using namespace Combinations;
-using namespace Combinations::MultipleRanges;
 
-typedef unsigned long int Size;
-typedef std::vector<int> IntVector;
-
-int main()
+std::ofstream ofs;
+std::ostream& readInput(int argc,char* argv[])
 {
-  IntVector v = {1,2,3,4,5,6,7,8,9,10};
+    if(argc>=2)
+    {
+        std::string outputFolder = argv[1];
+        boost::filesystem::create_directories(outputFolder);
 
-  auto b1 = v.begin();
-  auto e1 = v.begin()+3;
+        ofs = std::ofstream(outputFolder + "/log.txt");
+        return ofs;
+    }else
+    {
+        return std::cout;
+    }
+}
 
-  auto b2 = v.begin()+3;
-  auto e2 = v.begin()+6;
+int main(int argc, char* argv[])
+{
+    std::ostream& os = readInput(argc,argv);
+    Logger logger(os,false);
 
-  auto b3 = v.begin()+6;
-  auto e3 = v.end();
+    logger < Logger::HeaderOne < "Test Multiple Resolver" < Logger::Normal;
 
-  auto range = addRange(b1,e1,2).addRange(b2,e2,2).addRange(b3,e3,2);
-  auto mr = Multiple::createResolver(range);
+    time_t now = time(0);
+    os << ctime(&now) << "\n";
 
-  std::vector<Size> hops1 = {0,1};
-  std::vector<Size> hops2 = {0,2};
-  std::vector<Size> hops3 = {1,2};
+    bool flag = true;
+    try
+    {
+        flag = flag && Test::correcteness(logger);
+    }catch(std::exception ex)
+    {
+        flag=false;
+        logger < "Error: " < ex.what() < "\n";
+    }
 
-  mr.set(hops1);
-  auto& previous = mr.previousSolver;
-  previous.set(hops2);
-  auto& previous2 = previous.previousSolver;
-  previous2.set(hops3);
+    os.flush();
+    assert(flag);
 
-  IntVector c1(2);
-  IntVector c2(2);
-  IntVector c3(2);
-
-  mr >> c1 >> c2 >> c3;
-
-  std::vector< IntVector > cv;
-  cv.push_back(c1);cv.push_back(c2);cv.push_back(c3);
-
-  Utils::printCombinations<int>(cv.begin(),cv.end());
-
-  std::cout << "OK!" << std::endl;
-
-  return 0;
+    return 0;
 }

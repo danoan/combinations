@@ -20,3 +20,9 @@ target_link_libraries(test-eager-recursive
         -lcomb-logger
         -lboost_system
         -lboost_filesystem)
+
+install(DIRECTORY include
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/test)
+
+install(TARGETS test-eager-recursive
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/test/bin)

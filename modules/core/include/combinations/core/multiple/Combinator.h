@@ -11,7 +11,7 @@
 
 namespace Combinations
 {
-    namespace MultipleRanges
+    namespace Core
     {
         namespace Multiple
         {

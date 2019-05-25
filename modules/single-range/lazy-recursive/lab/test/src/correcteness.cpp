@@ -1,4 +1,4 @@
-#include "correcteness.h"
+#include "combinations/test/lazy-recursive/correcteness.h"
 
 namespace Combinations
 {

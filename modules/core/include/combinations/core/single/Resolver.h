@@ -6,7 +6,7 @@
 
 namespace Combinations
 {
-    namespace MultipleRanges
+    namespace Core
     {
         namespace Single
         {

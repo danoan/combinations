@@ -3,7 +3,7 @@
 
 #include <set>
 
-#include "combinations/eager-recursive.h"
+#include "combinations/single-range/lazy-nonrecursive.h"
 #include "combinations/utils/mockUtils.h"
 
 #include "combinations/logger/logger.h"
@@ -12,9 +12,12 @@ namespace Combinations
 {
     namespace Test
     {
-        bool belongsTo(const std::set<int>& currComb,const EagerRecursive::CombinationsVector<int>& combs);
+        typedef std::set< std::vector< int > > CombinationsSet;
+        typedef std::vector<int> CombinationSequence;
 
-        bool enumeration(unsigned int listSize, unsigned int combSize, EagerRecursive::CombinationsVector<int> checkV, Logger& logger);
+        bool belongsTo(const std::set<int>& currComb,const CombinationsSet& combs);
+
+        bool enumeration(unsigned int listSize, unsigned int combSize, const CombinationsSet& checkV, Logger& logger);
         bool numElements(unsigned int listSize, unsigned int combSize, unsigned int checkV, Logger& logger);
         bool correcteness(Logger& logger);
     }

@@ -1,7 +1,7 @@
 #ifndef COMBINATIONS_EXECUTION_H
 #define COMBINATIONS_EXECUTION_H
 
-#include "combinations/lazy-recursive.h"
+#include "combinations/single-range/lazy-recursive.h"
 #include "combinations/utils/mockUtils.h"
 
 #include "combinations/logger/logger.h"

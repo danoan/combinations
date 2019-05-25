@@ -1,10 +1,10 @@
 #include <iostream>
-#include <combinations/eager-recursive.h>
+#include <combinations/single-range/eager-recursive.h>
 
 #include "combinations/utils/displayUtils.h"
 #include "combinations/utils/mockUtils.h"
 
-#include "combinations/eager-recursive.h"
+#include "combinations/single-range/eager-recursive.h"
 
 using namespace Combinations;
 

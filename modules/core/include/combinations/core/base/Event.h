@@ -3,7 +3,7 @@
 
 namespace Combinations
 {
-    namespace MultipleRanges
+    namespace Core
     {
         struct Event
         {

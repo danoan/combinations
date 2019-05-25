@@ -6,7 +6,7 @@
 #include "combinations/utils/displayUtils.h"
 
 using namespace Combinations;
-using namespace Combinations::MultipleRanges;
+using namespace Combinations::Core;
 
 int main()
 {
@@ -25,7 +25,7 @@ int main()
     cv.push_back(nextComb);
   }
 
-  Utils::printCombinations<int>(cv.begin(),cv.end());
+  Utils::printCombinations(cv.begin(),cv.end());
 
   return 0;
 }

@@ -3,7 +3,7 @@
 
 #include <set>
 
-#include "combinations/lazy-nonrecursive.h"
+#include "combinations/single-range/lazy-recursive.h"
 #include "combinations/utils/mockUtils.h"
 
 #include "combinations/logger/logger.h"

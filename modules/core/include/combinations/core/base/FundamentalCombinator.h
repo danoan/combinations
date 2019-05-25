@@ -8,7 +8,7 @@
 
 namespace Combinations
 {
-    namespace MultipleRanges
+    namespace Core
     {
         class FundamentalCombinator
         {

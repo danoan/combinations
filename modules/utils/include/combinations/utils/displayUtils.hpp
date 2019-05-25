@@ -4,17 +4,18 @@ namespace Combinations
 {
     namespace Utils
     {
-        template<class TElementType>
-        void printCombinations(CombinationsIterator<TElementType> begin,
-                               CombinationsIterator<TElementType> end)
+        template<class TIterator>
+        void printCombinations(TIterator begin,
+                               TIterator end,
+                               std::ostream& os)
         {
             for(auto itc=begin;itc!=end;++itc)
             {
                 for(auto iti=itc->begin();iti!=itc->end();++iti)
                 {
-                    std::cout << *iti << ",";
+                    os << *iti << ",";
                 }
-                std::cout << "\n";
+                os << "\n";
             }
         }
     }

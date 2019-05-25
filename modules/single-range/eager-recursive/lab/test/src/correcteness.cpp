@@ -1,4 +1,4 @@
-#include "correcteness.h"
+#include "combinations/test/eager-recursive/correcteness.h"
 
 namespace Combinations
 {

@@ -5,7 +5,7 @@
 
 namespace Combinations
 {
-    namespace MultipleRanges
+    namespace Core
     {
         namespace Multiple {
             template<class TRange, bool= TRange::isFirst>

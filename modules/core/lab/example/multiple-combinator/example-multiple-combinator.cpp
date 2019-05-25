@@ -6,7 +6,7 @@
 #include "combinations/utils/displayUtils.h"
 
 using namespace Combinations;
-using namespace Combinations::MultipleRanges;
+using namespace Combinations::Core;
 
 typedef std::vector<int> IntVector;
 typedef std::vector<double> DoubleVector;
@@ -41,7 +41,7 @@ void singleType()
         unionV.clear();
     }
 
-    Utils::printCombinations<int>(cv.begin(),cv.end());
+    Utils::printCombinations(cv.begin(),cv.end());
     std::cout << "\n" << cv.size() << " combinations!\n\n";
 }
 

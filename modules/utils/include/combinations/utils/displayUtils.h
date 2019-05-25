@@ -8,20 +8,15 @@ namespace Combinations
 {
     namespace Utils
     {
-        template<class TElementType>
-        using CombinationsVector = std::vector< std::vector<TElementType> >;
-
-        template<class TElementType>
-        using CombinationsIterator = typename CombinationsVector<TElementType>::const_iterator;
-
         /***
          * Prints a combination for each line
          * @param begin
          * @param end
          */
-        template<class TElementType>
-        void printCombinations(CombinationsIterator<TElementType> begin,
-                               CombinationsIterator<TElementType> end);
+        template<class TIterator>
+        void printCombinations(TIterator begin,
+                               TIterator end,
+                               std::ostream& os=std::cout);
     }
 }
 

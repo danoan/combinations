@@ -3,7 +3,7 @@
 
 namespace Combinations
 {
-    namespace MultipleRanges
+    namespace Core
     {
         template<typename TIteratorMaster, typename... TIterators>
         struct Range
@@ -16,8 +16,8 @@ namespace Combinations
             Range(TIteratorMaster begin, TIteratorMaster end, Size elemsPerComb) :
                     begin(begin),
                     end(end),
-                    elemsPerComb(elemsPerComb),
                     length(0),
+                    elemsPerComb(elemsPerComb),
                     previous(*this)
             {
                 for (auto it = begin; it != end; ++it, ++length);
@@ -51,7 +51,7 @@ namespace Combinations
 
             Range(const PreviousRange &previous,
                   TIteratorMaster begin, TIteratorMaster end, Size elemsPerComb) :
-                    previous(previous), begin(begin), end(end), elemsPerComb(elemsPerComb), length(0)
+                    begin(begin), end(end), length(0), elemsPerComb(elemsPerComb),previous(previous)
             {
                 for (auto it = begin; it != end; ++it, ++length);
             }
