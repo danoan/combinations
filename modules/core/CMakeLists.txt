@@ -7,6 +7,9 @@ target_include_directories(core INTERFACE
 
 if(${BUILD_TESTS})
     add_subdirectory(lab/test)
+endif()
+
+if(${BUILD_EXAMPLES})
     add_subdirectory(lab/example)
 endif()
 

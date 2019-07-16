@@ -9,31 +9,46 @@
 
 using namespace Combinations;
 
-std::ofstream ofs;
-std::ostream& readInput(int argc,char* argv[])
+struct InputData
 {
+    InputData(){}
+
+    std::string outputFolder;
+    bool createStream;
+};
+
+InputData readInput(int argc,char* argv[])
+{
+    InputData id;
     if(argc>=2)
     {
-        std::string outputFolder = argv[1];
-        boost::filesystem::create_directories(outputFolder);
+        id.outputFolder = argv[1];
+        id.createStream = true;
 
-        ofs = std::ofstream(outputFolder + "/log.txt");
-        return ofs;
+        boost::filesystem::create_directories(id.outputFolder);
     }else
     {
-        return std::cout;
+        id.createStream=false;
     }
+
+    return id;
 }
 
 int main(int argc, char* argv[])
 {
-    std::ostream& os = readInput(argc,argv);
-    Logger logger(os,false);
+    InputData id = readInput(argc,argv);
 
+    std::ostream* os;
+    if(id.createStream)
+        os = new std::ofstream(id.outputFolder + "/log.txt");
+    else
+        os = &std::cout;
+
+    Logger logger(*os,false);
     logger < Logger::HeaderOne < "Test Fundamental Combinator" < Logger::Normal;
 
     time_t now = time(0);
-    os << ctime(&now) << "\n";
+    *os << ctime(&now) << "\n";
 
     bool flag = true;
     try
@@ -46,7 +61,7 @@ int main(int argc, char* argv[])
         logger < "Error: " < ex.what() < "\n";
     }
 
-    os.flush();
+    os->flush();
     assert(flag);
 
     return 0;
