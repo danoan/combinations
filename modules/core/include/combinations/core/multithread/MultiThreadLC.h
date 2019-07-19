@@ -5,6 +5,9 @@
 #include <cmath>
 #include <functional>
 
+#include <stack>
+#include <vector>
+
 #include <thread>
 #include <mutex>
 #include <condition_variable>
@@ -18,11 +21,11 @@ namespace Combinations
     {
         namespace MultiThread
         {
-            template<class TThreadInput,int ThreadPoolSize=4>
+            template<class TThreadInput>
             class Controller
             {
             public:
-                typedef Controller<TThreadInput,ThreadPoolSize> Self;
+                typedef Controller<TThreadInput> Self;
 
                 typedef TThreadInput MyThreadInput;
                 typedef typename MyThreadInput::MyResolver MyResolver;
@@ -32,11 +35,20 @@ namespace Combinations
 
                 typedef std::function<void(MyResolver&, MyThreadInput&, ThreadControl&)> CallbackFunction;
 
+            private:
+                typedef unsigned int uint;
 
             public:
-                Controller(int threadSize,CallbackFunction cbf):threadSize(threadSize),cbf(cbf)
+                Controller( uint numThreads,
+                            uint queriesPerThread,
+                            CallbackFunction cbf):  numThreads(numThreads),
+                                                    queriesPerThread(queriesPerThread),
+                                                    cbf(cbf)
                 {
-                    for(int i=0;i<ThreadPoolSize;++i)
+                    this->threads.resize(numThreads);
+                    this->LCVector.resize(numThreads);
+
+                    for(uint i=0;i<numThreads;++i)
                     {
                         this->threadPool.push(i);
                     }
@@ -72,7 +84,7 @@ namespace Combinations
                     MyResolver mockValue = combinatorModel.resolver();
 
 
-                    for(int i=0;i<ThreadPoolSize;++i)
+                    for(uint i=0;i<numThreads;++i)
                     {
                         this->LCVector[i] = new MyCombinator(combinatorModel);
                         threadInputVector.push_back( MyThreadInput(LCVector[i], params) );
@@ -82,6 +94,7 @@ namespace Combinations
                     do
                     {
                         std::unique_lock<std::mutex> lockNotify(this->mutexPoolStack);
+
                         {
                             while (!this->threadPool.empty())
                             {
@@ -96,22 +109,21 @@ namespace Combinations
                                 threads[tPos] = std::thread(&Self::threadStart,
                                                             this,
                                                             std::ref(threadInputVector[tPos]),
-                                                            ThreadControl(tPos, threadSize));
+                                                            ThreadControl(tPos, queriesPerThread));
                                 threads[tPos].detach();
 
-                                for (int currSize = 0; currSize < threadSize; ++currSize) {
+                                for (uint currSize = 0; currSize < queriesPerThread; ++currSize) {
                                     existsNext = combinatorModel.next(mockValue);
                                     if (!existsNext) break;
                                 }
                                 if (!existsNext) break;
                             }
                         }
-
                         cvPoolStack.wait(lockNotify);
                     }while(existsNext);
 
                     std::unique_lock<std::mutex> lockNotify(this->mutexPoolStack);
-                    while(this->threadPool.size()!=ThreadPoolSize)
+                    while(this->threadPool.size()!=numThreads)
                     {
                         cvPoolStack.wait(lockNotify);
                     }
@@ -121,13 +133,14 @@ namespace Combinations
                 ~Controller(){}
 
             public:
-                int threadSize;
+                uint numThreads;
+                uint queriesPerThread;
 
-                std::thread threads[ThreadPoolSize];
+                std::vector<std::thread> threads;
                 std::vector<MyThreadInput> threadInputVector;
 
                 std::stack<int> threadPool;
-                MyCombinator* LCVector[ThreadPoolSize];
+                std::vector<MyCombinator*> LCVector;
 
                 CallbackFunction cbf;
 

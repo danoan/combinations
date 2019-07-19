@@ -1,8 +1,8 @@
 #include <ctime>
 
 #include "combinations/logger/logger.h"
-#include "combinations/test/fundamental-combinator/correcteness.h"
-#include "combinations/test/fundamental-combinator/execution.h"
+#include "combinations/test/multithread/correcteness.h"
+#include "combinations/test/multithread/execution.h"
 
 using namespace Combinations;
 
@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
         os = &std::cout;
 
     Logger logger(*os,false);
-    logger < Logger::HeaderOne < "Test Fundamental Combinator" < Logger::Normal;
+    logger < Logger::HeaderOne < "Test Multithread" < Logger::Normal;
 
     time_t now = time(0);
     *os << ctime(&now) << "\n";
@@ -63,3 +63,4 @@ int main(int argc, char* argv[])
 
     return 0;
 }
+

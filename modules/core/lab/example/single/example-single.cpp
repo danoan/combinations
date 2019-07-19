@@ -13,13 +13,24 @@ using namespace Combinations::Core;
 
 typedef std::vector<int> IntVector;
 
-template<class TResolver>
-void cbf(std::vector<int>& nextComb,
-        std::vector< std::vector<int> >& cv, 
-        TResolver& resolver)
+void simplteExample()
 {
-    resolver >> nextComb;
-    cv.push_back(nextComb);
+    IntVector v = {1,2,3,4,5};
+    unsigned long int elemsPerComb = 3;
+
+    auto range = addRange(v.begin(),v.end(),elemsPerComb);
+    auto combinator = Single::createCombinator(range);
+    auto resolver = combinator.resolver();
+
+    std::vector<int> nextComb(elemsPerComb);
+    std::vector< std::vector<int> > cv;
+    while(combinator.next(resolver))
+    {
+        resolver >> nextComb;
+        cv.push_back(nextComb);
+    }
+
+    Utils::printCombinations(cv.begin(),cv.end());
 }
 
 void highLoadExample(int n, int k)
@@ -40,7 +51,8 @@ void highLoadExample(int n, int k)
     std::vector< std::vector<int> > cv;
     while(combinator.next(resolver))
     {
-        cbf(nextComb,cv,resolver);
+        resolver >> nextComb;
+        cv.push_back(nextComb);
     }
     logger.endTimer();
 
@@ -55,6 +67,6 @@ void highLoadExample(int n, int k)
 
 int main()
 {
-    highLoadExample(50,6);
+    highLoadExample(40,6);
     return 0;
 }
