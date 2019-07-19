@@ -3,3 +3,4 @@ project(example-combinations)
 
 add_subdirectory(single)
 add_subdirectory(multiple-combinator)
+add_subdirectory(multithread)
