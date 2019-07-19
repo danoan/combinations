@@ -122,9 +122,9 @@ namespace Combinations
                         cvPoolStack.wait(lockNotify);
                     }while(existsNext);
 
-                    std::unique_lock<std::mutex> lockNotify(this->mutexPoolStack);
                     while(this->threadPool.size()!=numThreads)
                     {
+                        std::unique_lock<std::mutex> lockNotify(this->mutexPoolStack);
                         cvPoolStack.wait(lockNotify);
                     }
 

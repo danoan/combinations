@@ -3,7 +3,7 @@
 namespace Combinations
 {
     Logger::Logger(std::ostream& os,bool exportObjectsFlag):os(os),
-    exportObjectsFlag(exportObjectsFlag)
+    exportObjectsFlag(exportObjectsFlag),ft(Logger::Normal)
     {}
 
     void Logger::startTimer()
