@@ -1,6 +1,6 @@
-# Description
+<img src="logo.png" width="320px">
 
-MagLac++ (Multiple type Lazy Combinations) allows to iterate over
+MagLac (Multiple type Lazy Combinations) allows to iterate over
 combinations of many lists of different types in a lazy fashion. 
 This is an education project and is incomplete.
 
