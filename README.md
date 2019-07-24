@@ -9,12 +9,12 @@ combinations of many lists of different types in a lazy fashion.
     #include <iostream>
     #include <string>
     
-    #include "combinations/core/base/Range.hpp"
-    #include "combinations/core/multiple/Combinator.h"
-    #include "combinations/utils/displayUtils.h"
+    #include "magLac/core/base/Range.hpp"
+    #include "magLac/core/multiple/Combinator.h"
+    #include "magLac/utils/displayUtils.h"
     
-    using namespace Combinations;
-    using namespace Combinations::Core;
+    using namespace magLac;
+    using namespace magLac::Core;
     
     int main(int argc, char* argv[])
     {
