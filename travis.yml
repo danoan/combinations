@@ -1,0 +1,16 @@
+dist: trusty
+sudo: false
+language: cpp
+compiler: gcc
+
+os: linux
+
+services:
+  - docker
+
+before_install:
+  - docker pull danoan/min-env:1.boost-filesystem
+  - docker build . -t maglac:build
+
+script:
+  - docker run maglac:build /magLac/.travis/test-magLac.sh /magLac/install

@@ -1,4 +1,4 @@
-FROM min-env:1.boost-filesystem
+FROM danoan/min-env:1.boost-filesystem
 
 WORKDIR /magLac
 ADD . /magLac
