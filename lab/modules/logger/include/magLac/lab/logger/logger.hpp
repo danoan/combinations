@@ -56,7 +56,7 @@ void Logger::normal(const TClass& s)
 }
 
 template<class TClass>
-Logger& Logger::operator<(const TClass& s)
+Logger& Logger::operator<<(const TClass& s)
 {
     if(ft==HeaderOne) headerOne(s);
     else if(ft==HeaderTwo) headerTwo(s);
@@ -66,7 +66,7 @@ Logger& Logger::operator<(const TClass& s)
 }
 
 template<class TClass>
-Logger& Logger::operator<(const LoggableObject<TClass>& s)
+Logger& Logger::operator<<(const LoggableObject<TClass>& s)
 {
     //exportObject(s.object,s.name);
     return *this;

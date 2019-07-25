@@ -26,10 +26,10 @@ namespace magLac
 
         bool correctenessMultithread(Logger& logger, Size numThreads, Size n, Size k, const CombinationsCheckContainer& checkV)
         {
-            logger < Logger::HeaderTwo < "TestCorrecteness" < Logger::Normal;
-            logger < "Num Threads: " < numThreads < "\n"
-                   < "Num. Elems: " < n < "\n"
-                   < "Elems. per comb.: " < k < "\n";
+            logger << Logger::HeaderTwo << "TestCorrecteness" << Logger::Normal;
+            logger << "Num Threads: " << numThreads << "\n"
+                   << "Num. Elems: " << n << "\n"
+                   << "Elems. per comb.: " << k << "\n";
 
             IntVector v = Utils::createIntegerVector(n);
             Size totalComb = 1;
@@ -72,27 +72,27 @@ namespace magLac
                 combinations.insert(combinations.end(),cc.begin(),cc.end());
             }
 
-            logger < "Expected Combinations: " < totalComb < "\n";
-            logger < "Computed Combinations: " < visitedElems < "\n\n";
+            logger << "Expected Combinations: " << totalComb << "\n";
+            logger << "Computed Combinations: "  << visitedElems << "\n\n";
 
 
             for(auto it=checkV.begin();it!=checkV.end();++it)
             {
                 if(!belongsTo(*it,combinations))
                 {
-                    logger < "Passed: false\n";
+                    logger << "Passed: false\n";
 
-                    logger < "Computed: \n";
+                    logger << "Computed: \n";
                     Utils::printCombinations(combinations.begin(),combinations.end(),logger.stream());
 
-                    logger < "Expected: \n";
+                    logger << "Expected: \n";
                     Utils::printCombinations(checkV.begin(),checkV.end(),logger.stream());
 
                     return false;
                 }
             }
 
-            logger < "Passed: true\n";
+            logger << "Passed: true\n";
 
 
             return totalComb==visitedElems;

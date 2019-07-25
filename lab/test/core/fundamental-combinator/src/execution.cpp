@@ -6,9 +6,9 @@ namespace magLac
     {
         bool fundamentalCombinator(Size numElems, Size elemsPerComb,Logger& logger)
         {
-            logger < Logger::HeaderTwo < "Test Execution" < Logger::Normal;
-            logger < "Num. Elems: " < numElems < "\n";
-            logger < "Elems. per comb: " < elemsPerComb < "\n";
+            logger << Logger::HeaderTwo << "Test Execution" << Logger::Normal;
+            logger << "Num. Elems:  " << numElems << "\n";
+            logger << "Elems. per comb: " << elemsPerComb << "\n";
 
             bool flag = true;
             logger.startTimer();
@@ -23,16 +23,16 @@ namespace magLac
                 int count=0;
                 while(fc.next(nextComb))count++;
 
-                logger < "Expected Combinations: " < totalComb < "\n";
-                logger < "Computed Combinations: " < count < "\n\n";
+                logger << "Expected Combinations: " << totalComb << "\n";
+                logger << "Computed Combinations: " << count << "\n\n";
             }catch(std::exception ex)
             {
-                logger < "Error: " < ex.what();
+                logger << "Error: " << ex.what();
                 flag = false;
             }
             logger.endTimer();
 
-            logger < "Passed: " < flag;
+            logger << "Passed: " << flag;
 
             return flag;
         }

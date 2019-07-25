@@ -10,9 +10,9 @@ namespace magLac
             bool flag = false;
             try
             {
-                logger < Logger::HeaderTwo < "Test Execution" < Logger::Normal;
-                logger < "List Size: "  < listSize < "\n";
-                logger < "Comb Size: "  < combSize < "\n";
+                logger << Logger::HeaderTwo << "Test Execution" << Logger::Normal;
+                logger << "List Size: "  << listSize << "\n";
+                logger << "Comb Size: "  << combSize << "\n";
 
                 auto intVector = Utils::createIntegerVector(listSize);
                 auto combGenerator = LazyRecursive::combinations(combSize,
@@ -26,15 +26,15 @@ namespace magLac
                 CombinationSequence cs;
                 while(combGenerator.next(cs)) ++size;
 
-                logger < "Combinations Counts: " < size < "\n";
+                logger << "Combinations Counts: "<< size << "\n";
                 flag = true;
             }catch(std::exception ex)
             {
-                logger < "Error: " < ex.what() < "\n";
+                logger << "Error: " << ex.what() << "\n";
                 flag = false;
             }
 
-            logger < "Execution time: ";
+            logger << "Execution time: ";
             logger.endTimer();
             return flag;
         }

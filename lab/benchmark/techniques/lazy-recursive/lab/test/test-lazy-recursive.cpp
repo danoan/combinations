@@ -9,7 +9,7 @@ using namespace magLac;
 
 struct InputData
 {
-    InputData(){}
+
 
     std::string outputFolder;
     bool createStream;
@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
         os = &std::cout;
 
     Logger logger(*os,false);
-    logger < Logger::HeaderOne < "Test Lazy Recursive" < Logger::Normal;
+    logger << Logger::HeaderOne << "Test Lazy Recursive" << Logger::Normal;
 
     time_t now = time(0);
     *os << ctime(&now) << "\n";
@@ -64,5 +64,7 @@ int main(int argc, char* argv[])
     }
 
     os->flush();
+    if(id.createStream) delete os;
+
     return flag?0:1;
 }

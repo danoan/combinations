@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/danoan/magLac.svg?branch=master)](https://travis-ci.com/danoan/magLac)
+
 <img src="logo.png" width="320px">
 
 MagLac (Multiple type Lazy Combinations) allows to iterate over

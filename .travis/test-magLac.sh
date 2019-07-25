@@ -7,7 +7,7 @@ EXAMPLE_BIN_ROOT=${INSTALL_PATH}/example/bin
 ${TEST_BIN_ROOT}/test-eager-recursive
 ${TEST_BIN_ROOT}/test-fundamental-combinator
 ${TEST_BIN_ROOT}/test-lazy-nonrecursive
-${TEST_BIN_ROOT}/test-lazy-recursive
+${TEST_BIN_ROOT}/cursive
 ${TEST_BIN_ROOT}/test-multiple-resolver
 ${TEST_BIN_ROOT}/test-multithread
 ${TEST_BIN_ROOT}/test-range

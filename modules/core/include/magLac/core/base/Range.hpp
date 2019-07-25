@@ -16,8 +16,8 @@ namespace magLac
             Range(TIteratorMaster begin, TIteratorMaster end, Size elemsPerComb) :
                     begin(begin),
                     end(end),
-                    length(0),
                     elemsPerComb(elemsPerComb),
+                    length(0),
                     previous(*this)
             {
                 for (auto it = begin; it != end; ++it, ++length);
@@ -34,8 +34,8 @@ namespace magLac
 
             TIteratorMaster begin;
             TIteratorMaster end;
-            Size length;
             Size elemsPerComb;
+            Size length;
 
             Self &previous; //Mock for initializeProxyVector in MultipleRangeCombinator.h
         };
@@ -51,7 +51,7 @@ namespace magLac
 
             Range(const PreviousRange &previous,
                   TIteratorMaster begin, TIteratorMaster end, Size elemsPerComb) :
-                    begin(begin), end(end), length(0), elemsPerComb(elemsPerComb),previous(previous)
+                    begin(begin), end(end), elemsPerComb(elemsPerComb),length(0),previous(previous)
             {
                 for (auto it = begin; it != end; ++it, ++length);
             }
@@ -66,8 +66,8 @@ namespace magLac
 
             TIteratorMaster begin;
             TIteratorMaster end;
-            Size length;
             Size elemsPerComb;
+            Size length;
 
             PreviousRange previous;
             static const bool isFirst;

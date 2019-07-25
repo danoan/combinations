@@ -29,8 +29,8 @@ namespace magLac
         void startTimer();
         void endTimer();
 
-        Logger& operator<(bool b);
-        Logger& operator<(FormattingType fr);
+        Logger& operator<<(bool b);
+        Logger& operator<<(FormattingType fr);
 
         template<class TClass>
         unsigned int length(const TClass& s);
@@ -45,10 +45,10 @@ namespace magLac
         void normal(const TClass& s);
 
         template<class TClass>
-        Logger& operator<(const TClass& s);
+        Logger& operator<<(const TClass& s);
 
         template<class TClass>
-        Logger& operator<(const LoggableObject<TClass>& s);
+        Logger& operator<<(const LoggableObject<TClass>& s);
 
         template<class TClass>
         Logger& operator-(const TClass& object);
@@ -59,6 +59,7 @@ namespace magLac
         void changeOutputFolder(const std::string& newOutputFolder);
 
         std::string buffer();
+
 
     private:
         std::ostream& os;

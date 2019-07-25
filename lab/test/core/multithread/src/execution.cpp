@@ -6,10 +6,10 @@ namespace magLac
     {
         bool executionMultithread(Logger& logger, Size numThreads, Size n, Size k)
         {
-            logger < Logger::HeaderTwo < "TestExecution" < Logger::Normal;
-            logger < "Num Threads: " < numThreads < "\n"
-            < "Num. Elems: " < n < "\n"
-            < "Elems. per comb.: " < k < "\n";
+            logger << Logger::HeaderTwo << "TestExecution" << Logger::Normal;
+            logger << "Num Threads:  " << numThreads << "\n"
+            << "Num. Elems:  " << n << "\n"
+            << "Elems. per comb.: " << k << "\n";
 
             bool flag=true;
             logger.startTimer();
@@ -45,7 +45,7 @@ namespace magLac
 
                 logger.startTimer();
                 mtController.start(mrc,params);
-                logger < "Execution time: ";
+                logger << "Execution time: ";
                 logger.endTimer();
 
                 Size visitedElems=0;
@@ -54,17 +54,17 @@ namespace magLac
                     visitedElems+=mtController.threadInputVector[i].vars.cv.size();
                 }
 
-                logger < "Expected Combinations: " < totalComb < "\n";
-                logger < "Computed Combinations: " < visitedElems < "\n\n";
+                logger << "Expected Combinations: " << totalComb << "\n";
+                logger << "Computed Combinations: "  << visitedElems << "\n\n";
             }
             catch(std::exception& ex)
             {
-                logger < "Error: " < ex.what();
+                logger << "Error: " << ex.what();
                 flag=false;
             }
             logger.endTimer();
 
-            logger < "Passed: " < flag;
+            logger << "Passed: " << flag;
             return flag;
         }
 

@@ -5,7 +5,7 @@ using namespace magLac;
 
 struct InputData
 {
-    InputData(){}
+
 
     std::string outputFolder;
     bool createStream;
@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
         os = &std::cout;
 
     Logger logger(*os,false);
-    logger < Logger::HeaderOne < "Test Multiple Resolver" < Logger::Normal;
+    logger << Logger::HeaderOne << "Test Multiple Resolver" << Logger::Normal;
 
     time_t now = time(0);
     *os << ctime(&now) << "\n";
@@ -51,9 +51,10 @@ int main(int argc, char* argv[])
     }catch(std::exception ex)
     {
         flag=false;
-        logger < "Error: " < ex.what() < "\n";
+        logger << "Error: " << ex.what() << "\n";
     }
 
     os->flush();
+    if(id.createStream) delete os;
     return flag?0:1;
 }

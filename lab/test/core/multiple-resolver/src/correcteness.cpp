@@ -7,7 +7,7 @@ namespace magLac
     {
         bool correcteness(Logger& logger)
         {
-            logger < Logger::HeaderTwo < "Test Correcteness" < Logger::Normal;
+            logger << Logger::HeaderTwo << "Test Correcteness" << Logger::Normal;
 
             IntVector v = {1,2,3,4,5,6,7,8,9,10};
 
@@ -44,7 +44,7 @@ namespace magLac
             flag = flag && check(c2.begin(),c2.end(),{4,6});
             flag = flag && check(c3.begin(),c3.end(),{2,3});
 
-            logger < "Passed: " < flag;
+            logger << "Passed: " << flag;
 
             return flag;
         }

@@ -27,9 +27,9 @@ namespace magLac
 
         bool fundamentalCombinator(Size numElems, Size elemsPerComb, const CombinationsCheckContainer& checkV, Logger& logger)
         {
-            logger < Logger::HeaderTwo < "Test correcteness" < Logger::Normal;
-            logger < "Num. Elems: " < numElems < "\n";
-            logger < "Elems. per comb: " < elemsPerComb < "\n";
+            logger << Logger::HeaderTwo << "Test correcteness" << Logger::Normal;
+            logger << "Num. Elems:  " << numElems << "\n";
+            logger << "Elems. per comb: " << elemsPerComb << "\n";
 
             Core::FundamentalCombinator fc(numElems,elemsPerComb);
 
@@ -41,18 +41,18 @@ namespace magLac
             {
                 if(!belongsTo(*it,cv))
                 {
-                    logger < "Passed: false\n";
+                    logger << "Passed: false\n";
 
-                    logger < "Computed: \n";
+                    logger << "Computed: \n";
                     Utils::printCombinations(cv.begin(),cv.end(),logger.stream());
 
-                    logger < "Expected: \n";
+                    logger << "Expected: \n";
                     Utils::printCombinations(checkV.begin(),checkV.end(),logger.stream());
                     return false;
                 }
             }
 
-            logger < "Passed: true\n";
+            logger << "Passed: true\n";
             return true;
 
         }

@@ -9,7 +9,7 @@ namespace magLac
 
         bool correcteness(Logger& logger)
         {
-            logger < Logger::HeaderTwo < "Test Correcteness" < Logger::Normal;
+            logger << Logger::HeaderTwo << "Test Correcteness" << Logger::Normal;
 
             std::vector<int> v = {1,2,3,4,5,6,7,8,9,10};
             auto b1 = v.begin();
@@ -31,7 +31,7 @@ namespace magLac
             auto previous2 = previous.previous;
             flag = flag && check(previous2.begin,previous2.end,{1,2,3});
 
-            logger < "Passed: "  < flag;
+            logger << "Passed: "  << flag;
 
             return flag;
         }

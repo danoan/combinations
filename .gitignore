@@ -1,4 +1,5 @@
 .idea
+install
 output
 cmake-build-debug
 build
