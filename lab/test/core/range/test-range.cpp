@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
     try
     {
         flag = flag && Test::correcteness(logger);
-    }catch(std::exception ex)
+    }catch(std::exception& ex)
     {
         flag=false;
         logger << "Error: " << ex.what() << "\n";

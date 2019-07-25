@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
         flag = flag && Test::execution(50,3,logger);
 
         flag = flag && Test::correcteness(logger);
-    }catch(std::exception ex)
+    }catch(std::exception& ex)
     {
         flag = false;
         *os << ex.what() << "\n\n";

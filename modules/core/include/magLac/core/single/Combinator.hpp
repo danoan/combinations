@@ -26,8 +26,8 @@ namespace magLac
                 typedef FundamentalCombinator::Container Hops;
 
             public:
-                Combinator(MyRange range) : range(range),
-                                            fc(range.length, range.elemsPerComb)
+                explicit Combinator(MyRange range) : range(range),
+                                                     fc(range.length, range.elemsPerComb)
                 {
                     hops.resize(range.elemsPerComb);
                 }

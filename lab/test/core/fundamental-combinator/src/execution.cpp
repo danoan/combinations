@@ -25,7 +25,7 @@ namespace magLac
 
                 logger << "Expected Combinations: " << totalComb << "\n";
                 logger << "Computed Combinations: " << count << "\n\n";
-            }catch(std::exception ex)
+            }catch(std::exception& ex)
             {
                 logger << "Error: " << ex.what();
                 flag = false;

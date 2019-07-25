@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
     {
         flag = flag && Test::correcteness(logger);
         flag = flag && Test::execution(logger);
-    }catch(std::exception ex)
+    }catch(std::exception& ex)
     {
         flag=false;
         logger << "Error: " << ex.what() << "\n";

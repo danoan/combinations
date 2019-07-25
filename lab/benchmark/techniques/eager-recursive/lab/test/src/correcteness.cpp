@@ -84,7 +84,7 @@ namespace magLac
                 EagerRecursive::CombinationsVector<int> cv = { {1,2},{1,3},{1,4},{2,3},{2,4},{3,4} };
                 flag = flag && enumeration(4,2,cv,logger);
 
-            }catch(std::exception ex)
+            }catch(std::exception& ex)
             {
                 flag = false;
                 logger << "Error: " << ex.what() << "\n\n";

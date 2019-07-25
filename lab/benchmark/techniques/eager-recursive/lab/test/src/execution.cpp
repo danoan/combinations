@@ -21,7 +21,7 @@ namespace magLac
 
                 logger << "Combinations Counts: "  << cv.size() << "\n";
                 flag = true;
-            }catch(std::exception ex)
+            }catch(std::exception& ex)
             {
                 logger << "Error: " << ex.what() << "\n";
                 flag = false;
