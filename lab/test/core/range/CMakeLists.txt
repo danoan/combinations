@@ -16,8 +16,3 @@ target_link_libraries(test-range
         -lboost_system
         -lboost_filesystem)
 
-install(DIRECTORY include
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/test)
-
-install(TARGETS test-range
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/test/bin)

@@ -20,6 +20,3 @@ target_link_libraries(example-single
         -lmagLac-logger
         -lboost_system
         -lboost_filesystem)
-
-install(TARGETS example-single
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/example/bin)

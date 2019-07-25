@@ -20,8 +20,3 @@ target_link_libraries(test-multiple-resolver
         -lboost_system
         -lboost_filesystem)
 
-install(DIRECTORY include
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/test)
-
-install(TARGETS test-multiple-resolver
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/test/bin)

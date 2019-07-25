@@ -11,7 +11,7 @@
 
 #include "magLac/core/multithread/ThreadControl.h"
 #include "magLac/core/multithread/ThreadInput.h"
-#include "magLac/core/multithread/MultiThreadLC.h"
+#include "magLac/core/multithread/Trigger.h"
 
 #include "magLac/lab/utils/mockUtils.h"
 #include "magLac/lab/logger/logger.h"
@@ -133,25 +133,25 @@ CombinationsResult multithreadLazyGeneric(const InputData& id)
     struct UserVars{ UserVars():totalCombs(0){} void restart(){}; uint totalCombs; };
 
     typedef magLac::Core::MultiThread::ThreadInput<decltype(combinator),UserVars,Params> MyThreadInput;
-    typedef magLac::Core::MultiThread::Controller<MyThreadInput> MyController;
-    typedef MyController::MyResolver MyResolver;
+    typedef magLac::Core::MultiThread::Trigger<MyThreadInput> MyTrigger;
+    typedef MyTrigger::MyResolver MyResolver;
     typedef magLac::Core::MultiThread::ThreadControl ThreadControl;
 
     uint totalCombs=0;
-    MyController::CallbackFunction cbf = [](MyResolver& r, MyThreadInput& ti, ThreadControl& tc) mutable{++ti.vars.totalCombs;};
+    MyTrigger::CallbackFunction cbf = [](MyResolver& r, MyThreadInput& ti, ThreadControl& tc) mutable{++ti.vars.totalCombs;};
 
     Params params;
-    MyController mtController(std::thread::hardware_concurrency(),QUERIES_PER_THREAD,cbf);
+    MyTrigger mtTrigger(std::thread::hardware_concurrency(),QUERIES_PER_THREAD,cbf);
 
 
     std::stringstream ss;
     magLac::Logger logger(ss,false);
     logger.startTimer();
 
-    mtController.start(combinator,params);
+    mtTrigger.start(combinator,params);
     logger.endTimer();
 
-    for(auto it=mtController.threadInputVector.begin();it!=mtController.threadInputVector.end();++it)
+    for(auto it=mtTrigger.threadInputVector.begin();it!=mtTrigger.threadInputVector.end();++it)
     {
         totalCombs+=it->vars.totalCombs;
     }

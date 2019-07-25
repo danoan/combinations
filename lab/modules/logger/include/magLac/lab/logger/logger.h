@@ -1,5 +1,5 @@
-#ifndef COMBINATIONS_LOGGER_H
-#define COMBINATIONS_LOGGER_H
+#ifndef MAGLAC_LAB_LOGGER_LOGGER_H
+#define MAGLAC_LAB_LOGGER_LOGGER_H
 
 #include <sstream>
 #include <ctime>
@@ -78,4 +78,4 @@ namespace magLac
 }
 
 
-#endif //COMBINTIONS_LOGGER_H
+#endif //MAGLAC_LAB_LOGGER_LOGGER_H

@@ -1,5 +1,5 @@
-#ifndef COMBINATIONS_MOCK_UTILS
-#define COMBINATIONS_MOCK_UTILS
+#ifndef MAGLAC_LAB_UTILS_MOCKUTILS_H
+#define MAGLAC_LAB_UTILS_MOCKUTILS_H
 
 #include <vector>
 
@@ -21,4 +21,4 @@ namespace magLac
     }
 }
 
-#endif
+#endif//MAGLAC_LAB_UTILS_MOCKUTILS_H

@@ -21,8 +21,3 @@ target_link_libraries(test-multithread
         -lboost_filesystem
         -lpthread)
 
-install(DIRECTORY include
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/test)
-
-install(TARGETS test-multithread
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/test/bin)

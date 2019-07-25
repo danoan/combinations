@@ -1,5 +1,5 @@
-#ifndef MULTIPLE_COMBINATOR_H
-#define MULTIPLE_COMBINATOR_H
+#ifndef MAGLAC_CORE_MULTIPLE_COMBINATOR_H
+#define MAGLAC_CORE_MULTIPLE_COMBINATOR_H
 
 #include <vector>
 
@@ -70,4 +70,4 @@ namespace magLac
     }
 }
 
-#endif
+#endif//MAGLAC_CORE_MULTIPLE_COMBINATOR_H

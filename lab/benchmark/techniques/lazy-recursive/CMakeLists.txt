@@ -10,7 +10,3 @@ target_include_directories(lib-lazy-recursive INTERFACE
 if( ${BUILD_TESTS} )
     add_subdirectory(lab/test)
 endif()
-
-
-install(DIRECTORY include
-        DESTINATION ${CMAKE_INSTALL_PREFIX})

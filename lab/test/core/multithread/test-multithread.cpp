@@ -1,8 +1,8 @@
 #include <ctime>
 
 #include "magLac/lab/logger/logger.h"
-#include "correcteness.h"
-#include "execution.h"
+#include "magLac/lab/test/core/multithread/correcteness.h"
+#include "magLac/lab/test/core/multithread/execution.h"
 
 using namespace magLac;
 
@@ -50,8 +50,8 @@ int main(int argc, char* argv[])
     bool flag = true;
     try
     {
-        flag = flag && Test::correcteness(logger);
-        flag = flag && Test::execution(logger);
+        flag = flag && Test::Multithread::correcteness(logger);
+        flag = flag && Test::Multithread::execution(logger);
     }catch(std::exception& ex)
     {
         flag=false;

@@ -1,5 +1,5 @@
-#ifndef LAZY_COMBINATOR_MULTITHREADLC_H
-#define LAZY_COMBINATOR_MULTITHREADLC_H
+#ifndef MAGLAC_CORE_MULTITHREAD_TRIGGER_H
+#define MAGLAC_CORE_MULTITHREAD_TRIGGER_H
 
 #include <stdexcept>
 #include <cmath>
@@ -22,10 +22,10 @@ namespace magLac
         namespace MultiThread
         {
             template<class TThreadInput>
-            class Controller
+            class Trigger
             {
             public:
-                typedef Controller<TThreadInput> Self;
+                typedef Trigger<TThreadInput> Self;
 
                 typedef TThreadInput MyThreadInput;
                 typedef typename MyThreadInput::MyResolver MyResolver;
@@ -39,7 +39,7 @@ namespace magLac
                 typedef unsigned int uint;
 
             public:
-                Controller( uint numThreads,
+                Trigger( uint numThreads,
                             uint queriesPerThread,
                             CallbackFunction cbf):  numThreads(numThreads),
                                                     queriesPerThread(queriesPerThread),
@@ -137,7 +137,7 @@ namespace magLac
 
                 }
 
-                ~Controller(){}
+                ~Trigger(){}
 
             public:
                 uint numThreads;
@@ -160,5 +160,5 @@ namespace magLac
     }
 }
 
-#endif //LAZY_COMBINATOR_MULTITHREADLC_H
+#endif //MAGLAC_CORE_MULTITHREAD_TRIGGER_H
 

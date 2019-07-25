@@ -11,9 +11,3 @@ target_include_directories(magLac-logger PRIVATE
 target_link_libraries(magLac-logger
         -lboost_system
         -lboost_filesystem)
-
-install(DIRECTORY include
-        DESTINATION ${CMAKE_INSTALL_PREFIX})
-
-install(TARGETS magLac-logger
-        LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)

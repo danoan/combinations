@@ -18,6 +18,3 @@ target_link_libraries(example-multithread
         -lboost_system
         -lboost_filesystem)
 
-
-install(TARGETS example-multithread
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/example/bin)

@@ -16,5 +16,3 @@ target_include_directories(example-multiple-combinator PRIVATE
 target_link_libraries(example-multiple-combinator
         -lmagLac-utils)
 
-install(TARGETS example-multiple-combinator
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/example/bin)

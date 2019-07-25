@@ -1,5 +1,5 @@
-#ifndef SINGLE_COMBINATOR_H
-#define SINGLE_COMBINATOR_H
+#ifndef MAGLAC_CORE_BASE_SINCLE_COMBINATOR_H
+#define MAGLAC_CORE_BASE_SINCLE_COMBINATOR_H
 
 #include <vector>
 #include <stack>
@@ -62,4 +62,4 @@ namespace magLac
 
 
 
-#endif
+#endif//MAGLAC_CORE_BASE_SINCLE_COMBINATOR_H

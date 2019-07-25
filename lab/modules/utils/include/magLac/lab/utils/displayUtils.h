@@ -1,5 +1,5 @@
-#ifndef COMBINATIONS_DISPLAYUTILS_H
-#define COMBINATIONS_DISPLAYUTILS_H
+#ifndef MAGLAC_LAB_UTILS_DISPLAYUTILS_H
+#define MAGLAC_LAB_UTILS_DISPLAYUTILS_H
 
 #include <iostream>
 #include <vector>
@@ -22,4 +22,4 @@ namespace magLac
 
 #include "displayUtils.hpp"
 
-#endif //COMBINATIONS_DISPLAYUTILS_H
+#endif //MAGLAC_LAB_UTILS_DISPLAYUTILS_H

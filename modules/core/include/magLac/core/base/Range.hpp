@@ -1,5 +1,5 @@
-#ifndef RANGE_H
-#define RANGE_H
+#ifndef MAGLAC_CORE_BASE_RANGE_H
+#define MAGLAC_CORE_BASE_RANGE_H
 
 namespace magLac
 {
@@ -87,4 +87,4 @@ namespace magLac
     }
 }
 
-#endif
+#endif//MAGLAC_CORE_BASE_RANGE_H

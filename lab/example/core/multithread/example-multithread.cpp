@@ -2,7 +2,7 @@
 #include "magLac/core/multiple/Combinator.h"
 #include "magLac/core/single/Combinator.hpp"
 
-#include "magLac/core/multithread/MultiThreadLC.h"
+#include "magLac/core/multithread/Trigger.h"
 #include "magLac/core/multithread/ThreadInput.h"
 
 #include "magLac/lab/utils/displayUtils.h"
@@ -43,11 +43,11 @@ int main(int argc, char* argv[])
     typedef MyCombinator::MyResolver MyResolver;
 
     typedef MultiThread::ThreadInput<MyCombinator,UserVars,Params> MyThreadInput;
-    typedef MultiThread::Controller<MyThreadInput> MyThreadController;
+    typedef MultiThread::Trigger<MyThreadInput> MyThreadTrigger;
     typedef MultiThread::ThreadControl ThreadControl;
 
 
-    MyThreadController::CallbackFunction cbf = [](MyResolver& resolver,MyThreadInput& ti, ThreadControl& tc) mutable
+    MyThreadTrigger::CallbackFunction cbf = [](MyResolver& resolver,MyThreadInput& ti, ThreadControl& tc) mutable
     {
         IntVector c1(2),c2(2),c3(2),unionV;
         resolver >> c3 >> c2 >> c1;
@@ -60,14 +60,14 @@ int main(int argc, char* argv[])
     };
 
     Params params;
-    MyThreadController mtController(numThreads,queriesPerThread,cbf);
-    mtController.start(mrc,params);
+    MyThreadTrigger mtTrigger(numThreads,queriesPerThread,cbf);
+    mtTrigger.start(mrc,params);
 
 
     int totalCombs=0;
     for(unsigned int i=0;i<numThreads;++i)
     {
-        const std::vector<IntVector>& cv = mtController.threadInputVector[i].vars.cv;
+        const std::vector<IntVector>& cv = mtTrigger.threadInputVector[i].vars.cv;
         totalCombs+=cv.size();
         Utils::printCombinations(cv.begin(),cv.end());
     }

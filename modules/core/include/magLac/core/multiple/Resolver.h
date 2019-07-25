@@ -1,5 +1,5 @@
-#ifndef MULTIPLE_RESOLVER_H
-#define MULTIPLE_RESOLVER_H
+#ifndef MAGLAC_CORE_MULTIPLE_RESOLVER_H
+#define MAGLAC_CORE_MULTIPLE_RESOLVER_H
 
 #include "magLac/core/single/Resolver.h"
 
@@ -84,4 +84,4 @@ namespace magLac
         }
     }
 }
-#endif
+#endif //MAGLAC_CORE_MULTIPLE_RESOLVER_H

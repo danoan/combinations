@@ -1,5 +1,5 @@
 #include <iostream>
-#include "correcteness.h"
+#include "magLac/lab/test/core/multiple-resolver/correcteness.h"
 
 using namespace magLac;
 
@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
     bool flag = true;
     try
     {
-        flag = flag && Test::correcteness(logger);
+        flag = flag && Test::MultipleResolver::correcteness(logger);
     }catch(std::exception& ex)
     {
         flag=false;

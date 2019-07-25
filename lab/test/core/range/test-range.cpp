@@ -1,14 +1,12 @@
 #include <iostream>
 #include <vector>
 
-#include "correcteness.h"
+#include "magLac/lab/test/core/range/correcteness.h"
 
 using namespace magLac;
 
 struct InputData
 {
-
-
     std::string outputFolder;
     bool createStream;
 };
@@ -49,7 +47,7 @@ int main(int argc, char* argv[])
     bool flag = true;
     try
     {
-        flag = flag && Test::correcteness(logger);
+        flag = flag && Test::Range::correcteness(logger);
     }catch(std::exception& ex)
     {
         flag=false;

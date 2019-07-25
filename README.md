@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.com/danoan/magLac.svg?branch=master)](https://travis-ci.com/danoan/magLac)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/759c30de9365427dbaeaaf4bf1668ba5)](https://app.codacy.com/app/danoan/magLac?utm_source=github.com&utm_medium=referral&utm_content=danoan/magLac&utm_campaign=Badge_Grade_Dashboard)
 
 <img src="logo.png" width="320px">
 

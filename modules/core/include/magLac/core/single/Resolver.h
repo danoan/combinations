@@ -1,5 +1,5 @@
-#ifndef SINGLE_RESOLVER_H
-#define SINGLE_RESOLVER_H
+#ifndef MAGLAC_CORE_SINGLE_RESOLVER_H
+#define MAGLAC_CORE_SINGLE_RESOLVER_H
 
 #include <stdexcept>
 #include <vector>
@@ -70,4 +70,4 @@ namespace magLac
 }
 
 
-#endif
+#endif //MAGLAC_CORE_SINGLE_RESOLVER_H

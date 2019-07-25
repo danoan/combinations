@@ -23,8 +23,3 @@ target_link_libraries(test-fundamental-combinator
         -lboost_system
         -lboost_filesystem)
 
-install(DIRECTORY include
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/test)
-
-install(TARGETS test-fundamental-combinator
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/test/bin)

@@ -1,5 +1,5 @@
-#ifndef EVENT_H
-#define EVENT_H
+#ifndef MAGLAC_CORE_BASE_EVENT_H
+#define MAGLAC_CORE_BASE_EVENT_H
 
 namespace magLac
 {
@@ -21,4 +21,4 @@ namespace magLac
 
 
 
-#endif
+#endif  //MAGLAC_CORE_BASE_EVENT_H
