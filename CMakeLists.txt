@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.2)
 
 set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib:${BOOST_LIBS_DIR}")
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+set(CMAKE_CXX_OUTPUT_EXTENSION_REPLACE 1)
 
 project(magLac)
 
@@ -13,6 +14,14 @@ link_directories(${CMAKE_BINARY_DIR}/lab/modules/utils
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall" )
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic")
+
+if(${CMAKE_BUILD_TYPE} STREQUAL Debug)
+    if(${COVERAGE})
+        message(WARNING alo)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftest-coverage")
+    endif()
+endif()
 
 if(${BUILD_EXAMPLES})
     add_subdirectory(lab/example)

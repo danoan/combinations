@@ -1,5 +1,7 @@
 FROM danoan/min-env:1.boost-filesystem
 
+RUN apt-get install lcov -y
+
 WORKDIR /magLac
 ADD . /magLac
 
@@ -10,7 +12,14 @@ RUN /magLac/.travis/build-magLac.sh \
 /magLac \
 /magLac/build-release \
 /magLac/install \
-release
+Release \
+OFF
 
+RUN /magLac/.travis/build-magLac.sh \
+/magLac \
+/magLac/build-debug \
+/magLac/install-debug \
+Debug \
+ON
 
 

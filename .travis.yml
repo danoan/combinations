@@ -13,4 +13,6 @@ before_install:
   - docker build . -t maglac:build
 
 script:
-  - docker run maglac:build /magLac/.travis/test-magLac.sh /magLac/install
+  - docker run maglac:build /magLac/.travis/test-magLac.sh /magLac/build-release
+  - docker run maglac:build /magLac/.travis/generate-coverage.sh
+  - docker run maglac:build bash <(curl -s https://codecov.io/bash)
