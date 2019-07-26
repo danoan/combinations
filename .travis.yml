@@ -18,6 +18,6 @@ script:
 
 after_success:
   - ci_env=$(bash <(curl -s https://codecov.io/env) )
-  - echo "$ci_env"
   - ci_post_cov="bash <(curl -s https://codecov.io/bash) -t 82919896-a0e1-4a38-b01c-670f43b7f91d"
-  - docker run "$ci_env" maglac:build bash -c "$ci_post_cov"
+  - env
+  - docker run $ci_env maglac:build bash -c "$ci_post_cov"
