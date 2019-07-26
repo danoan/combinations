@@ -16,4 +16,4 @@ script:
   - docker run maglac:build /magLac/.travis/test-magLac.sh /magLac/build-release
   - docker run maglac:build /magLac/.travis/generate-coverage.sh
   - ci_env=`bash <(curl -s https://codecov.io/env)`
-  - docker run "$ci_env" maglac:build bash -c "bash <(curl -s https://codecov.io/bash)"
+  - docker run "$ci_env" maglac:build bash -c "bash <(curl -s https://codecov.io/bash) -t 82919896-a0e1-4a38-b01c-670f43b7f91d"
