@@ -1,10 +1,13 @@
 [![Build Status](https://travis-ci.com/danoan/magLac.svg?branch=master)](https://travis-ci.com/danoan/magLac)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/759c30de9365427dbaeaaf4bf1668ba5)](https://app.codacy.com/app/danoan/magLac?utm_source=github.com&utm_medium=referral&utm_content=danoan/magLac&utm_campaign=Badge_Grade_Dashboard)
+[![codecov](https://codecov.io/gh/danoan/magLac/branch/master/graph/badge.svg)](https://codecov.io/gh/danoan/magLac)
+
+
 
 <img src="logo.png" width="320px">
 
 MagLac (Multiple type Lazy Combinations) allows to iterate over
-combinations of many lists of different types in a lazy fashion. 
+combinations of sets of different types in a lazy fashion. 
 
 # Example of use
 
