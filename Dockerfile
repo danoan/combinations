@@ -20,4 +20,6 @@ RUN /magLac/.travis/build-magLac.sh \
 Debug \
 ON
 
+#The script must run here, otherwise gcda files are not produced
+RUN /magLac/.travis/generate-coverage.sh
 

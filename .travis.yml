@@ -14,7 +14,6 @@ before_install:
 
 script:
   - docker run maglac:build /magLac/.travis/test-magLac.sh /magLac/build-release
-  - docker run maglac:build /magLac/.travis/generate-coverage.sh
 
 after_success:
   - ci_env=$(bash <(curl -s https://codecov.io/env) )
