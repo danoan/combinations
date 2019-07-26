@@ -1,6 +1,4 @@
-FROM danoan/min-env:1.boost-filesystem
-
-RUN apt-get install lcov -y
+FROM danoan/min-env:2.lcov
 
 WORKDIR /magLac
 ADD . /magLac
