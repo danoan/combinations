@@ -5,10 +5,12 @@ TEST_BASE_PATH=${BUILD_PATH}/lab/test
 TEST_TECHNIQUES_BASE_PATH=${BUILD_PATH}/lab/benchmark/techniques
 EXAMPLE_BASE_PATH=${BUILD_PATH}/lab/example
 
-${TEST_BASE_PATH}/core/fundamental-combinator/test-fundamental-combinator
-${TEST_BASE_PATH}/core/multiple-resolver/test-multiple-resolver
+${TEST_BASE_PATH}/core/base/fundamental-combinator/test-fundamental-combinator
+${TEST_BASE_PATH}/core/base/range/test-range
+${TEST_BASE_PATH}/core/multiple/resolver/test-multiple-resolver
+${TEST_BASE_PATH}/core/multiple/combinator/test-multiple-combinator
+${TEST_BASE_PATH}/core/multiple/single/test-single-combinator
 ${TEST_BASE_PATH}/core/multithread/test-multithread
-${TEST_BASE_PATH}/core/range/test-range
 
 
 ${TEST_TECHNIQUES_BASE_PATH}/eager-recursive/lab/test/test-eager-recursive

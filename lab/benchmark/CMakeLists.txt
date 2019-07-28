@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.2)
 project(app-benchmark)
 
 add_executable(app-benchmark benchmark.cpp)
+add_dependencies(app-benchmark magLac-logger magLac-utils)
+
 target_include_directories(app-benchmark PRIVATE
         techniques/eager-recursive/include
         techniques/lazy-recursive/include
