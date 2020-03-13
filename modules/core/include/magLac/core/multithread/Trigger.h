@@ -137,7 +137,10 @@ namespace magLac
 
                 }
 
-                ~Trigger(){}
+                ~Trigger()
+                {
+                    for(auto v:LCVector) delete v;
+                }
 
             public:
                 uint numThreads;
