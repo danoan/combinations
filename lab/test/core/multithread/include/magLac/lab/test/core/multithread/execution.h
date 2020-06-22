@@ -6,7 +6,7 @@
 #include "magLac/core/multithread/Trigger.h"
 #include "magLac/core/multithread/ThreadInput.h"
 #include "magLac/core/multithread/ThreadControl.h"
-#include "magLac/core/single/Combinator.hpp"
+#include "magLac/core/base/Combinator.h"
 
 #include "magLac/lab/logger/logger.h"
 #include "magLac/lab/utils/mockUtils.h"

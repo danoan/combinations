@@ -41,7 +41,7 @@ namespace magLac
                 Size queriesPerThread = (Size) std::ceil( totalComb/(1.0*numThreads) );
 
                 auto range = magLac::Core::addRange(v.begin(),v.end(),k);
-                auto mrc = magLac::Core::Single::createCombinator(range);
+                auto mrc = magLac::Core::createCombinator(range);
 
                 typedef decltype(mrc) MyCombinator;
                 typedef MyCombinator::MyResolver MyResolver;

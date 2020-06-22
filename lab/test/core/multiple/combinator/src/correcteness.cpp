@@ -45,7 +45,7 @@ namespace magLac
                 auto range = addRange(v1.begin(),v1.end(),2)
                         .addRange(v2.begin(),v2.end(),1);
 
-                auto combinator = Multiple::createCombinator(range);
+                auto combinator = createCombinator(range);
                 auto resolver = combinator.resolver();
 
                 IntVector c1(2);

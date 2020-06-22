@@ -7,7 +7,7 @@
 #include "lazy-nonrecursive.h"
 
 #include "magLac/core/base/Range.hpp"
-#include "magLac/core/single/Combinator.hpp"
+#include "magLac/core/base/Combinator.h"
 
 #include "magLac/core/multithread/ThreadControl.h"
 #include "magLac/core/multithread/ThreadInput.h"
@@ -107,7 +107,7 @@ CombinationsResult lazyGeneric(const InputData& id)
 
 
     auto range = magLac::Core::addRange(intV.begin(),intV.end(),id.elemsPerComb);
-    auto combinator = magLac::Core::Single::createCombinator(range);
+    auto combinator = magLac::Core::createCombinator(range);
     auto resolver = combinator.resolver();
 
     std::stringstream ss;
@@ -126,7 +126,7 @@ CombinationsResult multithreadLazyGeneric(const InputData& id)
 
 
     auto range = magLac::Core::addRange(intV.begin(),intV.end(),id.elemsPerComb);
-    auto combinator = magLac::Core::Single::createCombinator(range);
+    auto combinator = magLac::Core::createCombinator(range);
     auto resolver = combinator.resolver();
 
     struct Params{};

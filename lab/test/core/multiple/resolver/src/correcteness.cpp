@@ -24,7 +24,7 @@ namespace magLac
                 auto e3 = v.end();
 
                 auto range = addRange(b1,e1,2).addRange(b2,e2,2).addRange(b3,e3,2);
-                auto mr = Multiple::createResolver(range);
+                auto mr = createResolver(range);
 
                 std::vector<Size> hops1 = {0,1};
                 std::vector<Size> hops2 = {0,2};

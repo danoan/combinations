@@ -3,10 +3,8 @@
 #include <vector>
 
 #include "magLac/core/base/Range.hpp"
-#include "magLac/core/single/Combinator.hpp"
+#include "magLac/core/base/Combinator.h"
 #include "magLac/lab/utils/displayUtils.h"
-#include "magLac/lab/utils/mockUtils.h"
-#include "magLac/lab/logger/logger.h"
 
 using namespace magLac;
 using namespace magLac::Core;
@@ -19,7 +17,7 @@ int main(int argc, char* argv[])
     unsigned long int elemsPerComb = 3;
 
     auto range = addRange(v.begin(),v.end(),elemsPerComb);
-    auto combinator = Single::createCombinator(range);
+    auto combinator = createCombinator(range);
     auto resolver = combinator.resolver();
 
     std::vector<int> nextComb(elemsPerComb);

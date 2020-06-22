@@ -1,6 +1,6 @@
 #include "magLac/core/base/Range.hpp"
-#include "magLac/core/multiple/Combinator.h"
-#include "magLac/core/single/Combinator.hpp"
+#include "magLac/core/base/Combinator.h"
+#include "magLac/core/base/Combinator.h"
 
 #include "magLac/core/multithread/Trigger.h"
 #include "magLac/core/multithread/ThreadInput.h"
@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
             .addRange(v2.begin(),v2.end(),2)
             .addRange(v3.begin(),v3.end(),2);
 
-    auto mrc = Multiple::createCombinator(range);
+    auto mrc = createCombinator(range);
 
     typedef decltype(mrc) MyCombinator;
     typedef MyCombinator::MyResolver MyResolver;
