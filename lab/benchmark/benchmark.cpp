@@ -6,12 +6,8 @@
 #include "lazy-recursive.h"
 #include "lazy-nonrecursive.h"
 
-#include "magLac/core/base/Range.hpp"
-#include "magLac/core/base/Combinator.h"
-
-#include "magLac/core/multithread/ThreadControl.h"
-#include "magLac/core/multithread/ThreadInput.h"
-#include "magLac/core/multithread/Trigger.h"
+#include "magLac/magLac.h"
+#include "magLac/multithread.h"
 
 #include "magLac/lab/utils/mockUtils.h"
 #include "magLac/lab/logger/logger.h"
@@ -127,33 +123,41 @@ CombinationsResult multithreadLazyGeneric(const InputData& id)
 
     auto range = magLac::Core::addRange(intV.begin(),intV.end(),id.elemsPerComb);
     auto combinator = magLac::Core::createCombinator(range);
-    auto resolver = combinator.resolver();
 
-    struct Params{};
-    struct UserVars{ UserVars():totalCombs(0){} void restart(){}; uint totalCombs; };
+    struct MyThreadData
+    {
+        struct MutableData
+        {
+            MutableData():totalCombs(0){}
+            void restart(){};
+            uint totalCombs;
+        };
 
-    typedef magLac::Core::MultiThread::ThreadInput<decltype(combinator),UserVars,Params> MyThreadInput;
-    typedef magLac::Core::MultiThread::Trigger<MyThreadInput> MyTrigger;
-    typedef MyTrigger::MyResolver MyResolver;
-    typedef magLac::Core::MultiThread::ThreadControl ThreadControl;
+        struct ConstantData{};
 
-    uint totalCombs=0;
-    MyTrigger::CallbackFunction cbf = [](MyResolver& r, MyThreadInput& ti, ThreadControl& tc) mutable{++ti.vars.totalCombs;};
+        MutableData mutableData;
+        ConstantData constantData;
+    };
 
-    Params params;
-    MyTrigger mtTrigger(std::thread::hardware_concurrency(),QUERIES_PER_THREAD,cbf);
+    MyThreadData data;
+    auto planner = magLac::slice(combinator,data,std::thread::hardware_concurrency(),QUERIES_PER_THREAD);
+    typedef decltype(planner)::MyThreadInfo MyThreadInfo;
 
 
     std::stringstream ss;
     magLac::Logger logger(ss,false);
     logger.startTimer();
 
-    mtTrigger.start(combinator,params);
+    uint totalCombs=0;
+    planner.run( [](MyThreadInfo&& ti) mutable{
+        ++ti.data.mutableData.totalCombs;
+    });
+
     logger.endTimer();
 
-    for(auto it=mtTrigger.threadInputVector.begin();it!=mtTrigger.threadInputVector.end();++it)
+    for(auto data:planner)
     {
-        totalCombs+=it->vars.totalCombs;
+        totalCombs+=data.mutableData.totalCombs;
     }
 
     return CombinationsResult(ss.str(),totalCombs);

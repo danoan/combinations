@@ -18,7 +18,7 @@ namespace magLac
         {
         public:
             typedef TRange MyRange;
-            typedef Resolver<MyRange, TRange::isFirst> MyResolver; //assert that Range is composed of at least 2 ranges.
+            typedef Resolver<MyRange, TRange::isFirst> MyResolver;
             typedef std::vector<FundamentalCombinator> FundamentalVector;
 
             typedef unsigned long int Size;

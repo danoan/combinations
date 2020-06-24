@@ -25,35 +25,29 @@ namespace magLac
                     Size queriesPerThread = (Size) std::ceil( totalComb/(1.0*numThreads) );
 
                     auto range = magLac::Core::addRange(v.begin(),v.end(),k);
-                    auto mrc = magLac::Core::createCombinator(range);
-
-                    typedef decltype(mrc) MyCombinator;
-                    typedef MyCombinator::MyResolver MyResolver;
-
-                    typedef magLac::Core::MultiThread::ThreadInput<MyCombinator,ExecutionUserVars,ExecutionParams> MyThreadInput;
-                    typedef magLac::Core::MultiThread::Trigger<MyThreadInput> MyThreadTrigger;
-                    typedef magLac::Core::MultiThread::ThreadControl ThreadControl;
+                    auto combinator = magLac::Core::createCombinator(range);
 
 
-                    IntVector c1(k);
-                    MyThreadTrigger::CallbackFunction cbf = [&c1](MyResolver& resolver,MyThreadInput& ti, ThreadControl& tc) mutable
-                    {
-                        resolver >> c1;
-                        ti.vars.cv.push_back(c1);
-                    };
-
-                    ExecutionParams params;
-                    MyThreadTrigger mtTrigger(numThreads,queriesPerThread,cbf);
+                    ExecutionData data;
+                    auto planner = slice(combinator,data,numThreads,queriesPerThread);
+                    typedef decltype(planner)::MyThreadInfo MyThreadInfo;
 
                     logger.startTimer();
-                    mtTrigger.start(mrc,params);
+
+                    IntVector c1(k);
+                    planner.run( [&c1](MyThreadInfo&& ti) mutable
+                                 {
+                                     ti.resolver >> c1;
+                                     ti.data.mutableData.cv.push_back(c1);
+                                 });
+
                     logger << "Execution time: ";
                     logger.endTimer();
 
                     Size visitedElems=0;
-                    for(Size i=0;i<numThreads;++i)
+                    for(auto data:planner)
                     {
-                        visitedElems+=mtTrigger.threadInputVector[i].vars.cv.size();
+                        visitedElems+=data.mutableData.cv.size();
                     }
 
                     logger << "Expected Combinations: " << totalComb << "\n";

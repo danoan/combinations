@@ -11,7 +11,7 @@ link_directories(${BOOST_LIBS_DIR})
 link_directories(${CMAKE_BINARY_DIR}/lab/modules/utils
         ${CMAKE_BINARY_DIR}/lab/modules/logger)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall" )
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic")
 

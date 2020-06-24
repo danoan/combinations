@@ -4,10 +4,8 @@
 #include <vector>
 #include <set>
 
-#include "magLac/core/multithread/Trigger.h"
-#include "magLac/core/multithread/ThreadInput.h"
-#include "magLac/core/multithread/ThreadControl.h"
-#include "magLac/core/base/Combinator.h"
+#include "magLac/magLac.h"
+#include "magLac/multithread.h"
 
 #include "magLac/lab/logger/logger.h"
 #include "magLac/lab/utils/mockUtils.h"
@@ -25,12 +23,21 @@ namespace magLac
             typedef std::vector< IntVector > CombinationsContainer;
             typedef std::vector< std::set<int> > CombinationsCheckContainer;
 
-            struct CorrectParams{};
-
-            struct CorrectUserVars
+            struct CorrectData
             {
-                void restart(){};
-                std::vector<IntVector> cv;
+                struct MutableData
+                {
+                    void restart(){};
+                    std::vector<IntVector> cv;
+                };
+
+                struct ConstantData
+                {
+
+                };
+
+                MutableData mutableData;
+                ConstantData constantData;
             };
 
             bool belongsTo(const std::set<int>& currComb,const CombinationsContainer& combs);

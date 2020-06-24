@@ -6,8 +6,7 @@
 #include <string>
 
 #include "magLac/lab/logger/logger.h"
-#include "magLac/core/base/Range.hpp"
-#include "magLac/core/base/Combinator.h"
+#include "magLac/magLac.h"
 
 namespace magLac
 {

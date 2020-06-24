@@ -12,8 +12,9 @@
 #include <mutex>
 #include <condition_variable>
 
-#include "ThreadInput.h"
+#include "DataChunk.h"
 #include "ThreadControl.h"
+#include "ThreadInfo.h"
 
 namespace magLac
 {
@@ -21,29 +22,29 @@ namespace magLac
     {
         namespace MultiThread
         {
-            template<class TThreadInput>
+            template<class TDataChunk>
             class Trigger
             {
             public:
-                typedef Trigger<TThreadInput> Self;
+                typedef Trigger<TDataChunk> Self;
 
-                typedef TThreadInput MyThreadInput;
-                typedef typename MyThreadInput::MyResolver MyResolver;
-                typedef typename MyThreadInput::Params Params;
-                typedef typename MyThreadInput::MyCombinator MyCombinator;
+                typedef TDataChunk MyDataChunk;
+                typedef typename MyDataChunk::MyResolver MyResolver;
+                typedef typename MyDataChunk::ConstantData ConstantData;
+                typedef typename MyDataChunk::MyCombinator MyCombinator;
+                typedef ThreadInfo<MyDataChunk> MyThreadInfo;
 
 
-                typedef std::function<void(MyResolver&, MyThreadInput&, ThreadControl&)> CallbackFunction;
+                typedef std::function<void(MyThreadInfo&&)> CallbackFunction;
 
             private:
                 typedef unsigned int uint;
 
             public:
                 Trigger( uint numThreads,
-                            uint queriesPerThread,
-                            CallbackFunction cbf):  numThreads(numThreads),
-                                                    queriesPerThread(queriesPerThread),
-                                                    cbf(cbf)
+                         uint queriesPerThread)
+                        :  numThreads(numThreads),
+                           queriesPerThread(queriesPerThread)
                 {
                     this->threads.resize(numThreads);
                     this->LCVector.resize(numThreads);
@@ -54,17 +55,17 @@ namespace magLac
                     }
                 }
 
-                void threadStart(MyThreadInput& ti, ThreadControl tc )
+                void threadStart(MyDataChunk& dc, ThreadControl tc, CallbackFunction cbf )
                 {
-                    ti.restart();
+                    dc.restart();
 
-                    auto resolver = ti.combinatorPt->resolver();
+                    auto resolver = dc.combinatorPt->resolver();
                     int q=0;
-                    while(  ti.combinatorPt->next(resolver) &&
+                    while(  dc.combinatorPt->next(resolver) &&
                             q<tc.maxQueries &&
                             tc.state==ThreadControl::RUNNING )
                     {
-                        this->cbf(resolver,ti,tc);
+                        cbf( MyThreadInfo(resolver,dc,tc) );
                         ++q;
                     }
 
@@ -79,7 +80,7 @@ namespace magLac
                     this->cvPoolStack.notify_one();
                 }
 
-                void start(MyCombinator& combinatorModel,const Params& params)
+                void start(MyCombinator& combinatorModel,const ConstantData& constantData, CallbackFunction cbf)
                 {
                     MyResolver mockValue = combinatorModel.resolver();
 
@@ -87,7 +88,7 @@ namespace magLac
                     for(uint i=0;i<numThreads;++i)
                     {
                         this->LCVector[i] = new MyCombinator(combinatorModel);
-                        threadInputVector.push_back( MyThreadInput(LCVector[i], params) );
+                        threadDataVector.push_back( MyDataChunk(LCVector[i], constantData) );
                     }
 
                     bool existsNext=true;
@@ -105,11 +106,12 @@ namespace magLac
                                 LCVector[tPos] = new MyCombinator(combinatorModel);
 
 
-                                threadInputVector[tPos].combinatorPt = LCVector[tPos];
+                                threadDataVector[tPos].combinatorPt = LCVector[tPos];
                                 threads[tPos] = std::thread(&Self::threadStart,
                                                             this,
-                                                            std::ref(threadInputVector[tPos]),
-                                                            ThreadControl(tPos, queriesPerThread));
+                                                            std::ref(threadDataVector[tPos]),
+                                                            ThreadControl(tPos, queriesPerThread),
+                                                            cbf);
                                 threads[tPos].detach();
 
                                 for (uint currSize = 0; currSize < queriesPerThread; ++currSize) {
@@ -147,12 +149,10 @@ namespace magLac
                 uint queriesPerThread;
 
                 std::vector<std::thread> threads;
-                std::vector<MyThreadInput> threadInputVector;
+                std::vector<MyDataChunk> threadDataVector;
 
                 std::stack<int> threadPool;
                 std::vector<MyCombinator*> LCVector;
-
-                CallbackFunction cbf;
 
                 std::mutex mutexPoolStack;
                 std::condition_variable cvPoolStack;
