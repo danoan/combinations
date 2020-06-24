@@ -6,81 +6,96 @@
 
 <img src="logo.png" width="320px">
 
-MagLac (Multiple type Lazy Combinations) allows to iterate over
-combinations of sets of different types in a lazy fashion. 
+magLac (Multiple type Lazy Combinations) makes combinations 
+simpler! magLac is a generic type library and multithread ready.
 
-# Example of use
+# Single set combination
+```c++
+    #include <magLac/magLac.h>
+    
+    using namespace magLac;
+    
+    vector<int> out(2);
+    auto explorer = takeFromEach<2>( {1,2,3} );
+    while(explorer.next(out) ){ 
+        for_each(out.begin(),out.end(),[](int x){ cout << x << ","; } );
+        cout << "\n"; 
+    }
+    
+    //Outputs
+    1,2
+    1,3
+    2,3    
+```
+
+# Multiple set combination
+```c++
+    #include <magLac/magLac.h>
+    
+    using namespace magLac;
+    
+    vector<int> outInt(2);
+    vector<string> outStr(3);
+    auto explorer = takeFromEach( {2,3} {1,2,3}, {"Sun","Lake","Water","Summer"} );
+    while(explorer.next(outInt,outStr) ){ 
+        for_each(outInt.begin(),outInt.end(),[](int x){ cout << x << ","; } );
+        for_each(outStr.begin(),outStr.end(),[](string x){ cout << x << ","; } );
+        cout << "\n"; 
+    }
+    
+    //Outputs
+    1,2,"Sun","Lake","Water"
+    1,2,"Sun","Lake","Summer"
+    1,3,"Sun","Lake","Water"
+    1,3,"Sun","Lake","Summer"    
+    2,3,"Sun","Lake","Water"
+    2,3,"Sun","Lake","Summer"    
+```
+
+# Multithread execution
 
 ```c++
-    #include <iostream>
-    #include <string>
-    
-    #include "magLac/core/base/Range.hpp"
-    #include "magLac/core/multiple/Combinator.h"
-    #include "magLac/utils/displayUtils.h"
+    #include <magLac/magLac.h>
+    #include <magLac/multithread.h>
     
     using namespace magLac;
     using namespace magLac::Core;
     
-    int main(int argc, char* argv[])
-    {
-        std::vector<int> v1 = {1,2,3};
-        std::vector<double> v2 = {0.2,0.4};
-        std::vector<string> v3 = {"abc","def","ghi","jklm"};
+    int sizeCombination=5;
+    int numThreads = 4;
+    int queriesPerThread = 1000;
     
-        auto range = addRange(v1.begin(),v1.end(),2)
-                    .addRange(v2.begin(),v2.end(),1)
-                    .addRange(v3.begin(),v3.end(),3);
+    vector< int > v = veryLongVector();
+    auto range = addRange(v.begin(),v.end(),sizeCombination);
+    auto combinator = createCombinator(range);
     
-        auto mrc = Multiple::createCombinator(range);
+    MyThreadData data;
+    auto planner = slice(combinator, data, numThreads, queriesPerThread);
+    typedef decltype(planner)::MyThreadInfo MyThreadInfo;
+
+    planner.run( [&sizeCombinations](MyThreadInfo&& ti) mutable
+                   {
+                       vector<int> out(sizeCombinations) out;
+                       ti.resolver >> out;
+
+                       for_each(out.begin(),out.end(),[](int x){ cout << x << ","; } );
+                       cout << "\n";
+                   });
     
-        std::vector<int> c1(2);
-        std::vector<double> c2(1);
-        std::vector<string> c3(3);
-    
-        auto resolver = mrc.resolver();
-        int total=0;
-        while(mrc.next(resolver))
-        {
-            resolver >> c3 >> c2 >> c1;
-    
-            for(auto it=c1.begin();it!=c1.end();++it) std::cout << *it << ",";
-            for(auto it=c2.begin();it!=c2.end();++it) std::cout << *it << ",";
-            for(auto it=c3.begin();it!=c3.end();++it) std::cout << *it << ",";
-            std::cout << "\n";
-            
-            ++total;
-        }
-        std::cout << "\n" << total << " combinations!\n\n";
-        
-        return 0;
-    }        
-    
-    //Outputs
-    1,2,0.2,abc,def,ghi,
-    1,3,0.2,abc,def,ghi,
-    2,3,0.2,abc,def,ghi,
-    1,2,0.4,abc,def,ghi,
-    1,3,0.4,abc,def,ghi,
-    2,3,0.4,abc,def,ghi,
-    1,2,0.2,abc,def,jklm,
-    1,3,0.2,abc,def,jklm,
-    2,3,0.2,abc,def,jklm,
-    1,2,0.4,abc,def,jklm,
-    1,3,0.4,abc,def,jklm,
-    2,3,0.4,abc,def,jklm,
-    1,2,0.2,abc,ghi,jklm,
-    1,3,0.2,abc,ghi,jklm,
-    2,3,0.2,abc,ghi,jklm,
-    1,2,0.4,abc,ghi,jklm,
-    1,3,0.4,abc,ghi,jklm,
-    2,3,0.4,abc,ghi,jklm,
-    1,2,0.2,def,ghi,jklm,
-    1,3,0.2,def,ghi,jklm,
-    2,3,0.2,def,ghi,jklm,
-    1,2,0.4,def,ghi,jklm,
-    1,3,0.4,def,ghi,jklm,
-    2,3,0.4,def,ghi,jklm,
-    
-    24 combinations!
 ``` 
+
+# More examples
+
+Take a look in the lab/example folder
+
+# Install
+```
+cd [magLac Source]
+mkdir build
+cd build 
+cmake .. [-DCMAKE_INSTALL_PREFIX={INSTALLATION DIRECTORY}] 
+[-DBUILD_TESTS={ON,OFF} ] 
+[-DBUILD_EXAMPLES={ON,OFF} ]  
+[-DBUILD_BENCHMARK={ON,OFF} ] 
+make install
+```
