@@ -5,9 +5,8 @@
 #include <unordered_set>
 #include <string>
 
+#include "magLac/magLac.h"
 #include "magLac/lab/logger/logger.h"
-#include "magLac/core/base/Range.hpp"
-#include "magLac/core/multiple/Combinator.h"
 
 namespace magLac
 {

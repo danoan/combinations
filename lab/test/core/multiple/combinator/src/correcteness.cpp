@@ -39,21 +39,13 @@ namespace magLac
 
                 logger << Logger::HeaderTwo << "Test Correcteness" << Logger::Normal;
 
-                IntVector v1 = {1,2,3};
-                StringVector v2 = {"Glasses","Cards"};
-
-                auto range = addRange(v1.begin(),v1.end(),2)
-                        .addRange(v2.begin(),v2.end(),1);
-
-                auto combinator = Multiple::createCombinator(range);
-                auto resolver = combinator.resolver();
+                auto combExplorer = takeFromEach( {2,1}, {1,2,3}, {"Glasses","Cards"} );
 
                 IntVector c1(2);
                 StringVector c2(1);
                 std::vector<Element> combinationSet;
-                while(combinator.next(resolver))
+                while(combExplorer.next(c1,c2))
                 {
-                    resolver >> c2 >> c1;
                     combinationSet.push_back( Element(c1,c2) );
                 }
 

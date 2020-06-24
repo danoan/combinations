@@ -5,7 +5,7 @@
 #include <vector>
 
 #include "magLac/core/base/Range.hpp"
-#include "magLac/core/multiple/Resolver.h"
+#include "magLac/core/base/Resolver.h"
 #include "magLac/lab/logger/logger.h"
 
 namespace magLac
