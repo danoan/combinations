@@ -37,7 +37,7 @@ bool correctenessMultithread(Logger &logger,
   Size queriesPerThread = (Size) std::ceil(totalComb / (1.0 * numThreads));
 
   auto range = magLac::Core::addRange(v.begin(), v.end(), k);
-  auto combinator = magLac::Core::createCombinator(range);
+  auto combinator = magLac::Core::Combinator(range);
 
   CorrectData data;
   auto planner = slice(combinator, data, numThreads, queriesPerThread);

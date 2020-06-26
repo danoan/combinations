@@ -7,12 +7,11 @@ namespace magLac {
 namespace Core {
 template<typename TIteratorMaster, typename... TIterators>
 struct Range {
-  typedef unsigned long int Size;
   typedef TIteratorMaster IteratorType;
 
   typedef Range<TIteratorMaster, TIterators...> Self;
 
-  Range(TIteratorMaster begin, TIteratorMaster end, Size elemsPerComb)
+  Range(TIteratorMaster begin, TIteratorMaster end, size_t elemsPerComb)
       :m_begin(begin),
        m_end(end),
        elemsPerComb(elemsPerComb),
@@ -21,7 +20,7 @@ struct Range {
 
   template<class TIteratorNext>
   Range<TIteratorNext, TIteratorMaster> addRange(TIteratorNext begin,
-                                                 TIteratorNext end, Size elemsPerComb) {
+                                                 TIteratorNext end, size_t elemsPerComb) {
     return Range<TIteratorNext, TIteratorMaster>(*this, begin, end, elemsPerComb);
   }
 
@@ -33,8 +32,8 @@ struct Range {
   TIteratorMaster m_end;
 
  public:
-  Size elemsPerComb;
-  Size length;
+  size_t elemsPerComb;
+  size_t length;
 
   Self &previous; //Mock for initializeProxyVector in MultipleRangeCombinator.h
   static const bool isFirst;

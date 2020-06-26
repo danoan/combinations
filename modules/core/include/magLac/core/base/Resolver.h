@@ -12,9 +12,7 @@ class Resolver {
 template<class TRange>
 class Resolver<TRange, true> {
  public:
-  typedef unsigned long int Size;
-  typedef std::vector<Size> VectorOfHops;
-
+  typedef std::vector<size_t> VectorOfHops;
   typedef Resolver<TRange, true> Self;
 
  public:
@@ -38,8 +36,7 @@ class Resolver<TRange, true> {
 template<class TRange>
 class Resolver<TRange, false> {
  public:
-  typedef unsigned long int Size;
-  typedef std::vector<Size> VectorOfHops;
+  typedef std::vector<size_t> VectorOfHops;
 
   typedef typename TRange::PreviousRange PreviousRange;
   typedef Resolver<PreviousRange, PreviousRange::isFirst> PreviousSolver;
@@ -65,10 +62,6 @@ class Resolver<TRange, false> {
   PreviousSolver previousSolver;
 };
 
-template<class TRange>
-Resolver<TRange> createResolver(TRange &range) {
-  return Resolver<TRange>(range);
-}
 }
 }
 #endif //MAGLAC_CORE_BASE_RESOLVER_H

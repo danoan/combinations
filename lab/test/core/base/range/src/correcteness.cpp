@@ -20,13 +20,13 @@ bool correcteness(Logger &logger) {
   bool flag = true;
 
   auto R = addRange(b1, e1, 2).addRange(b2, e2, 2).addRange(b3, e3, 2);
-  flag = flag && check(R.begin, R.end, {7, 8, 9, 10});
+  flag = flag && check(R.begin(), R.end(), {7, 8, 9, 10});
 
   auto previous = R.previous;
-  flag = flag && check(previous.begin, previous.end, {4, 5, 6});
+  flag = flag && check(previous.begin(), previous.end(), {4, 5, 6});
 
   auto previous2 = previous.previous;
-  flag = flag && check(previous2.begin, previous2.end, {1, 2, 3});
+  flag = flag && check(previous2.begin(), previous2.end(), {1, 2, 3});
 
   logger << "Passed: " << flag;
 

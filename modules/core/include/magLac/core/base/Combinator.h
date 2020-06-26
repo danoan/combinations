@@ -52,11 +52,6 @@ void initializeFundamentalVector(std::vector<FundamentalCombinator> &fv, const T
   else initializeFundamentalVector(fv, range.previous);
 }
 
-template<class TRange>
-Combinator<TRange> createCombinator(TRange &range) {
-  return Combinator<TRange>(range);
-}
-
 #include "Combinator.hpp"
 }
 }

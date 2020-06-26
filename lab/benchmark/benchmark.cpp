@@ -92,7 +92,7 @@ CombinationsResult lazyGeneric(const InputData &id) {
   auto intV = magLac::Utils::createIntegerVector(id.numElems);
 
   auto range = magLac::Core::addRange(intV.begin(), intV.end(), id.elemsPerComb);
-  auto combinator = magLac::Core::createCombinator(range);
+  auto combinator = magLac::Core::Combinator(range);
   auto resolver = combinator.resolver();
 
   std::stringstream ss;
@@ -109,7 +109,7 @@ CombinationsResult multithreadLazyGeneric(const InputData &id) {
   auto intV = magLac::Utils::createIntegerVector(id.numElems);
 
   auto range = magLac::Core::addRange(intV.begin(), intV.end(), id.elemsPerComb);
-  auto combinator = magLac::Core::createCombinator(range);
+  auto combinator = magLac::Core::Combinator(range);
 
   struct MyThreadData {
     struct MutableData {

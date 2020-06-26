@@ -20,7 +20,7 @@ bool executionMultithread(Logger &logger, Size numThreads, Size n, Size k) {
     Size queriesPerThread = (Size) std::ceil(totalComb / (1.0 * numThreads));
 
     auto range = magLac::Core::addRange(v.begin(), v.end(), k);
-    auto combinator = magLac::Core::createCombinator(range);
+    auto combinator = magLac::Core::Combinator(range);
 
     ExecutionData data;
     auto planner = slice(combinator, data, numThreads, queriesPerThread);

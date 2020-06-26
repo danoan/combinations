@@ -20,7 +20,7 @@ bool correcteness(Logger &logger) {
   auto e3 = v.end();
 
   auto range = addRange(b1, e1, 2).addRange(b2, e2, 2).addRange(b3, e3, 2);
-  auto mr = createResolver(range);
+  auto mr = Resolver<decltype(range),false>(range);
 
   std::vector<Size> hops1 = {0, 1};
   std::vector<Size> hops2 = {0, 2};
