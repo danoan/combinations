@@ -9,62 +9,56 @@
 
 #include "Resolver.h"
 
-namespace magLac
-{
-    namespace Core
-    {
-        template<class TRange>
-        class Combinator
-        {
-        public:
-            typedef TRange MyRange;
-            typedef Resolver<MyRange, TRange::isFirst> MyResolver;
-            typedef std::vector<FundamentalCombinator> FundamentalVector;
+namespace magLac {
+namespace Core {
+template<class TRange>
+class Combinator {
+ public:
+  typedef TRange MyRange;
+  typedef Resolver<MyRange, TRange::isFirst> MyResolver;
+  typedef std::vector<FundamentalCombinator> FundamentalVector;
 
-            typedef unsigned long int Size;
+  typedef unsigned long int Size;
 
-        private:
-            typedef std::stack<Event> EventStack;
+ private:
+  typedef std::stack<Event> EventStack;
 
-        public:
-            Combinator(MyRange &range);
+ public:
+  Combinator(MyRange &range);
 
-            bool next(MyResolver &resolver);
+  bool next(MyResolver &resolver);
 
-            MyResolver resolver();
+  MyResolver resolver();
 
-        private:
-            template<class TResolver>
-            void setResolver(TResolver &resolver);
+ private:
+  template<class TResolver>
+  void setResolver(TResolver &resolver);
 
-            template<class TResolver>
-            void setResolver(TResolver &resolver, Size proxyVectorIndex);
+  template<class TResolver>
+  void setResolver(TResolver &resolver, Size proxyVectorIndex);
 
-        private:
-            MyRange &range;
-            FundamentalVector fv;
+ private:
+  MyRange &range;
+  FundamentalVector fv;
 
-            Size numRanges;
-            EventStack es;
-        };
+  Size numRanges;
+  EventStack es;
+};
 
+template<class TRange>
+void initializeFundamentalVector(std::vector<FundamentalCombinator> &fv, const TRange &range) {
+  fv.push_back(FundamentalCombinator(range.length, range.elemsPerComb));
+  if (TRange::isFirst) return;
+  else initializeFundamentalVector(fv, range.previous);
+}
 
-        template<class TRange>
-        void initializeFundamentalVector(std::vector<FundamentalCombinator> &fv, const TRange &range)
-        {
-            fv.push_back(FundamentalCombinator(range.length, range.elemsPerComb));
-            if (TRange::isFirst) return;
-            else initializeFundamentalVector(fv, range.previous);
-        }
+template<class TRange>
+Combinator<TRange> createCombinator(TRange &range) {
+  return Combinator<TRange>(range);
+}
 
-        template<class TRange>
-        Combinator<TRange> createCombinator(TRange &range)
-        {
-            return Combinator<TRange>(range);
-        }
-
-        #include "Combinator.hpp"
-    }
+#include "Combinator.hpp"
+}
 }
 
 #endif//MAGLAC_CORE_BASE_COMBINATOR_H

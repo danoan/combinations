@@ -7,7 +7,7 @@ target_include_directories(lib-lazy-nonrecursive INTERFACE
         include
         ${CMAKE_SOURCE_DIR}/lab/modules/utils)
 
-if( ${BUILD_TESTS} )
+if (${BUILD_TESTS})
     add_subdirectory(lab/test)
-endif()
+endif ()
 

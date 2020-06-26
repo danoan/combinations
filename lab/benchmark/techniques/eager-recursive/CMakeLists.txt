@@ -5,6 +5,6 @@ add_library(lib-eager-recursive INTERFACE)
 target_include_directories(lib-eager-recursive INTERFACE
         include)
 
-if( ${BUILD_TESTS} )
+if (${BUILD_TESTS})
     add_subdirectory(lab/test)
-endif()
+endif ()

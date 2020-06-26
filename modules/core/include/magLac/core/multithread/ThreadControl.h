@@ -1,29 +1,25 @@
 #ifndef MAGLAC_CORE_MULTITHREAD_THREADCONTROL_H
 #define MAGLAC_CORE_MULTITHREAD_THREADCONTROL_H
 
-namespace magLac
-{
-    namespace Core
-    {
-        namespace MultiThread
-        {
-            struct ThreadControl
-            {
-                enum ThreadState{RUNNING,STOP};
+namespace magLac {
+namespace Core {
+namespace MultiThread {
+struct ThreadControl {
+  enum ThreadState { RUNNING, STOP };
 
-                ThreadControl(int vectorPos,
-                              int maxQueryElems):   state(RUNNING),
-                                                    vectorPos(vectorPos),
-                                                    maxQueries(maxQueryElems){}
+  ThreadControl(int vectorPos,
+                int maxQueryElems) : state(RUNNING),
+                                     vectorPos(vectorPos),
+                                     maxQueries(maxQueryElems) {}
 
-                void stop(){ state= STOP; }
+  void stop() { state = STOP; }
 
-                ThreadState state;
-                int vectorPos;
-                int maxQueries;
-            };
-        }
-    }
+  ThreadState state;
+  int vectorPos;
+  int maxQueries;
+};
+}
+}
 }
 
 #endif //MAGLAC_CORE_MULTITHREAD_THREADCONTROL_H
