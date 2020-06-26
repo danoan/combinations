@@ -67,7 +67,7 @@ simpler! magLac is a generic type library and multithread ready.
     
     vector< int > v = veryLongVector();
     auto m_range = addRange(v.begin(),v.end(),sizeCombination);
-    auto combinator = createCombinator(m_range);
+    auto combinator = Combinator(m_range);
     
     MyThreadData data;
     auto planner = slice(combinator, data, m_numThreads, m_queriesPerThread);
