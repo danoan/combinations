@@ -46,10 +46,16 @@ simpler! magLac is a generic type library and multithread ready.
     //Outputs
     1,2,"Sun","Lake","Water"
     1,2,"Sun","Lake","Summer"
+    1,2,"Sun","Water","Summer"
+    1,2,"Lake","Water","Summer"
     1,3,"Sun","Lake","Water"
-    1,3,"Sun","Lake","Summer"    
+    1,3,"Sun","Lake","Summer"
+    1,3,"Sun","Water","Summer"
+    1,3,"Lake","Water","Summer"    
     2,3,"Sun","Lake","Water"
-    2,3,"Sun","Lake","Summer"    
+    2,3,"Sun","Lake","Summer"
+    2,3,"Sun","Water","Summer"
+    2,3,"Lake","Water","Summer"    
 ```
 
 # Multithread execution
