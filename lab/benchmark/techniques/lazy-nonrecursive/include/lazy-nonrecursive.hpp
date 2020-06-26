@@ -3,7 +3,7 @@
 namespace magLac {
 namespace LazyNonRecursive {
 template<class TElementType, class TElementIterator>
-LazyCombinator<TElementType, TElementIterator>::LazyCombinator(Size combSize,
+LazyCombinator<TElementType, TElementIterator>::LazyCombinator(size_t combSize,
                                                                TElementIterator begin,
                                                                TElementIterator end):combSize(combSize),
                                                                                      begin(begin),

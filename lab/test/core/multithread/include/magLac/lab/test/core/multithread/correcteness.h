@@ -14,7 +14,6 @@
 namespace magLac {
 namespace Test {
 namespace Multithread {
-typedef unsigned long int Size;
 typedef std::vector<int> IntVector;
 
 typedef std::vector<IntVector> CombinationsContainer;
@@ -35,7 +34,7 @@ struct CorrectData {
 };
 
 bool belongsTo(const std::set<int> &currComb, const CombinationsContainer &combs);
-bool correctenessMultithread(Logger &logger, Size numThreads, Size n, Size k, const CombinationsCheckContainer &checkV);
+bool correctenessMultithread(Logger &logger, size_t numThreads, size_t n, size_t k, const CombinationsCheckContainer &checkV);
 bool correcteness(Logger &logger);
 }
 }

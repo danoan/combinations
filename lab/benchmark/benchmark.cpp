@@ -30,7 +30,7 @@ struct CombinationsResult {
 };
 
 void usage(int argc, char *argv[]) {
-  std::cerr << "Usage: " << argv[0] << "numElems elemsPerComb" << std::endl;
+  std::cerr << "Usage: " << argv[0] << "numElems m_elemsPerComb" << std::endl;
 }
 
 InputData readInput(int argc, char *argv[]) {

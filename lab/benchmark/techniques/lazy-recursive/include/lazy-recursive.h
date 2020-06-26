@@ -10,13 +10,12 @@ template<class TElementType, class TElementIterator>
 class LazyCombinator {
  public:
   typedef std::vector<TElementType> CombinationSequence;
-  typedef unsigned long int Size;
 
  private:
   enum Status { FAILURE, CONTINUE, SUCCESS };
 
  public:
-  LazyCombinator(Size combSize,
+  LazyCombinator(size_t combSize,
                  TElementIterator begin,
                  TElementIterator end);
 
@@ -24,15 +23,15 @@ class LazyCombinator {
 
  private:
   Status rec_combinations(CombinationSequence &curr,
-                          Size k,
+                          size_t k,
                           TElementIterator begin,
                           TElementIterator end);
 
  private:
-  Size combSize;
+  size_t combSize;
   TElementIterator begin, end;
-  Size lastCombNum;
-  Size currCombNum;
+  size_t lastCombNum;
+  size_t currCombNum;
 };
 
 template<class TElementIterator, class TElementType=typename TElementIterator::value_type>

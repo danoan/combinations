@@ -12,26 +12,25 @@ template<class TElementType, class TElementIterator>
 class LazyCombinator {
  public:
   typedef std::vector<TElementType> CombinationSequence;
-  typedef unsigned long int Size;
 
  private:
   typedef std::stack<Event> EventStack;
 
  private:
-  inline TElementIterator moveIt(TElementIterator it, Size steps) const {
+  inline TElementIterator moveIt(TElementIterator it, size_t steps) const {
     for (; steps > 0; --steps) ++it;
     return it;
   }
 
  public:
-  LazyCombinator(Size combSize, TElementIterator begin, TElementIterator end);
+  LazyCombinator(size_t combSize, TElementIterator begin, TElementIterator end);
   bool next(CombinationSequence &nextComb);
 
  private:
   EventStack es;
   CombinationSequence currComb;
 
-  Size combSize;
+  size_t combSize;
   TElementIterator begin, end;
 };
 

@@ -62,15 +62,15 @@ simpler! magLac is a generic type library and multithread ready.
     using namespace magLac::Core;
     
     int sizeCombination=5;
-    int numThreads = 4;
-    int queriesPerThread = 1000;
+    int m_numThreads = 4;
+    int m_queriesPerThread = 1000;
     
     vector< int > v = veryLongVector();
-    auto range = addRange(v.begin(),v.end(),sizeCombination);
-    auto combinator = createCombinator(range);
+    auto m_range = addRange(v.begin(),v.end(),sizeCombination);
+    auto combinator = createCombinator(m_range);
     
     MyThreadData data;
-    auto planner = slice(combinator, data, numThreads, queriesPerThread);
+    auto planner = slice(combinator, data, m_numThreads, m_queriesPerThread);
     typedef decltype(planner)::MyThreadInfo MyThreadInfo;
 
     planner.run( [&sizeCombinations](MyThreadInfo&& ti) mutable

@@ -22,9 +22,9 @@ bool correcteness(Logger &logger) {
   auto range = addRange(b1, e1, 2).addRange(b2, e2, 2).addRange(b3, e3, 2);
   auto mr = Resolver<decltype(range),false>(range);
 
-  std::vector<Size> hops1 = {0, 1};
-  std::vector<Size> hops2 = {0, 2};
-  std::vector<Size> hops3 = {1, 2};
+  std::vector<size_t> hops1 = {0, 1};
+  std::vector<size_t> hops2 = {0, 2};
+  std::vector<size_t> hops3 = {1, 2};
 
   mr.set(hops1);
   auto &previous = mr.previousSolver;

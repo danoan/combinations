@@ -3,7 +3,7 @@
 namespace magLac {
 namespace Test {
 namespace FundamentalCombinator {
-bool belongsTo(const std::set<Size> &currComb, const CombinationsContainer &combs) {
+bool belongsTo(const std::set<size_t> &currComb, const CombinationsContainer &combs) {
   for (auto itU = combs.cbegin(); itU != combs.cend(); ++itU) {
     bool found = true;
     for (auto it = itU->cbegin(); it != itU->cend(); ++it) {
@@ -19,7 +19,7 @@ bool belongsTo(const std::set<Size> &currComb, const CombinationsContainer &comb
   return false;
 }
 
-bool fundamentalCombinator(Size numElems, Size elemsPerComb, const CombinationsCheckContainer &checkV, Logger &logger) {
+bool fundamentalCombinator(size_t numElems, size_t elemsPerComb, const CombinationsCheckContainer &checkV, Logger &logger) {
   logger << Logger::HeaderTwo << "Test correcteness" << Logger::Normal;
   logger << "Num. Elems:  " << numElems << "\n";
   logger << "Elems. per comb: " << elemsPerComb << "\n";

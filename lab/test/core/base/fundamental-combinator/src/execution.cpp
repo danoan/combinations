@@ -3,7 +3,7 @@
 namespace magLac {
 namespace Test {
 namespace FundamentalCombinator {
-bool fundamentalCombinator(Size numElems, Size elemsPerComb, Logger &logger) {
+bool fundamentalCombinator(size_t numElems, size_t elemsPerComb, Logger &logger) {
   logger << Logger::HeaderTwo << "Test Execution" << Logger::Normal;
   logger << "Num. Elems:  " << numElems << "\n";
   logger << "Elems. per comb: " << elemsPerComb << "\n";
@@ -11,10 +11,10 @@ bool fundamentalCombinator(Size numElems, Size elemsPerComb, Logger &logger) {
   bool flag = true;
   logger.startTimer();
   try {
-    Size totalComb = 1;
+    size_t totalComb = 1;
 
-    for (Size i = 0; i < elemsPerComb; ++i) totalComb *= (numElems - i);
-    for (Size i = 1; i <= elemsPerComb; ++i) totalComb /= i;
+    for (size_t i = 0; i < elemsPerComb; ++i) totalComb *= (numElems - i);
+    for (size_t i = 1; i <= elemsPerComb; ++i) totalComb /= i;
 
     Core::FundamentalCombinator fc(numElems, elemsPerComb);
     Core::FundamentalCombinator::Container nextComb;

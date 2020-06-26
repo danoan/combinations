@@ -20,9 +20,9 @@ bool belongsTo(const std::set<int> &currComb, const CombinationsContainer &combs
 }
 
 bool correctenessMultithread(Logger &logger,
-                             Size numThreads,
-                             Size n,
-                             Size k,
+                             size_t numThreads,
+                             size_t n,
+                             size_t k,
                              const CombinationsCheckContainer &checkV) {
   logger << Logger::HeaderTwo << "TestCorrecteness" << Logger::Normal;
   logger << "Num Threads: " << numThreads << "\n"
@@ -30,11 +30,11 @@ bool correctenessMultithread(Logger &logger,
          << "Elems. per comb.: " << k << "\n";
 
   IntVector v = Utils::createIntegerVector(n);
-  Size totalComb = 1;
+  size_t totalComb = 1;
 
-  for (Size i = 0; i < k; ++i) totalComb *= (n - i);
-  for (Size i = 1; i <= k; ++i) totalComb /= i;
-  Size queriesPerThread = (Size) std::ceil(totalComb / (1.0 * numThreads));
+  for (size_t i = 0; i < k; ++i) totalComb *= (n - i);
+  for (size_t i = 1; i <= k; ++i) totalComb /= i;
+  size_t queriesPerThread = (size_t) std::ceil(totalComb / (1.0 * numThreads));
 
   auto range = magLac::Core::addRange(v.begin(), v.end(), k);
   auto combinator = magLac::Core::Combinator(range);
@@ -51,7 +51,7 @@ bool correctenessMultithread(Logger &logger,
   });
 
   CombinationsContainer combinations;
-  Size visitedElems = 0;
+  size_t visitedElems = 0;
   for (auto data:planner) {
     const CombinationsContainer &cc = data.mutableData.cv;
     visitedElems += cc.size();

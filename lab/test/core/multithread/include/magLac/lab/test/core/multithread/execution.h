@@ -12,7 +12,6 @@
 namespace magLac {
 namespace Test {
 namespace Multithread {
-typedef unsigned long int Size;
 typedef std::vector<int> IntVector;
 
 struct ExecutionData {
@@ -29,7 +28,7 @@ struct ExecutionData {
   ConstantData constantData;
 };
 
-bool executionMultithread(Logger &logger, Size numThreads, Size n, Size k);
+bool executionMultithread(Logger &logger, size_t numThreads, size_t n, size_t k);
 bool execution(Logger &logger);
 }
 }

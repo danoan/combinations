@@ -4,7 +4,7 @@ namespace magLac {
 namespace LazyRecursive {
 template<class TElementType, class TElementIterator>
 LazyCombinator<TElementType, TElementIterator>::
-LazyCombinator(Size combSize,
+LazyCombinator(size_t combSize,
                TElementIterator begin,
                TElementIterator end):combSize(combSize),
                                      begin(begin),
@@ -26,7 +26,7 @@ bool LazyCombinator<TElementType, TElementIterator>::next(CombinationSequence &c
 template<class TElementType, class TElementIterator>
 typename LazyCombinator<TElementType, TElementIterator>::Status
 LazyCombinator<TElementType, TElementIterator>::rec_combinations(CombinationSequence &curr,
-                                                                 Size k,
+                                                                 size_t k,
                                                                  TElementIterator begin,
                                                                  TElementIterator end) {
   if (k == 0) {

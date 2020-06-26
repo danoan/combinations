@@ -11,7 +11,6 @@ using CombinationsVector = std::vector<std::vector<T> >;
 template<class TElementType>
 using CombinationsIterator = typename CombinationsVector<TElementType>::const_iterator;
 
-typedef unsigned long int Size;
 enum Status { FAILURE, SUCCESS, CONTINUE };
 
 /***
@@ -26,7 +25,7 @@ enum Status { FAILURE, SUCCESS, CONTINUE };
 template<class TElementType, class TElementIterator>
 Status rec_combinations(CombinationsVector<TElementType> &combs,
                         std::vector<TElementType> &curr,
-                        Size k,
+                        size_t k,
                         TElementIterator begin,
                         TElementIterator end);
 
@@ -38,7 +37,7 @@ Status rec_combinations(CombinationsVector<TElementType> &combs,
  * @return
  */
 template<class TElementType, class TElementIterator>
-CombinationsVector<TElementType> combinations(Size k,
+CombinationsVector<TElementType> combinations(size_t k,
                                               TElementIterator begin,
                                               TElementIterator end);
 

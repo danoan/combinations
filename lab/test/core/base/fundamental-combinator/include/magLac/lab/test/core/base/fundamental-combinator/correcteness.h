@@ -11,12 +11,11 @@
 namespace magLac {
 namespace Test {
 namespace FundamentalCombinator {
-typedef unsigned long int Size;
-typedef std::vector<std::vector<Size> > CombinationsContainer;
-typedef std::vector<std::set<Size> > CombinationsCheckContainer;
+typedef std::vector<std::vector<size_t> > CombinationsContainer;
+typedef std::vector<std::set<size_t> > CombinationsCheckContainer;
 
-bool belongsTo(const std::set<Size> &currComb, const CombinationsContainer &combs);
-bool fundamentalCombinator(Size numElems, Size elemsPerComb, const CombinationsCheckContainer &checkV, Logger &logger);
+bool belongsTo(const std::set<size_t> &currComb, const CombinationsContainer &combs);
+bool fundamentalCombinator(size_t numElems, size_t elemsPerComb, const CombinationsCheckContainer &checkV, Logger &logger);
 bool correcteness(Logger &logger);
 }
 }

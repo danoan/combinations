@@ -41,14 +41,13 @@ struct Range {
 
 template<typename TIteratorMaster, typename TIteratorSecond, typename... TIterators>
 struct Range<TIteratorMaster, TIteratorSecond, TIterators...> {
-  typedef unsigned long int Size;
   typedef TIteratorMaster IteratorType;
 
   typedef Range<TIteratorMaster, TIteratorSecond, TIterators...> Self;
   typedef Range<TIteratorSecond, TIterators...> PreviousRange;
 
   Range(const PreviousRange &previous,
-        TIteratorMaster begin, TIteratorMaster end, Size elemsPerComb)
+        TIteratorMaster begin, TIteratorMaster end, size_t elemsPerComb)
       :m_begin(begin),
        m_end(end),
        elemsPerComb(elemsPerComb),
@@ -57,7 +56,7 @@ struct Range<TIteratorMaster, TIteratorSecond, TIterators...> {
 
   template<class TIteratorNext>
   Range<TIteratorNext, TIteratorMaster, TIteratorSecond, TIterators...>
-  addRange(TIteratorNext begin, TIteratorNext end, Size elemsPerComb) {
+  addRange(TIteratorNext begin, TIteratorNext end, size_t elemsPerComb) {
     return Range<TIteratorNext, TIteratorMaster, TIteratorSecond, TIterators...>(*this, begin, end, elemsPerComb);
   }
 
@@ -69,8 +68,8 @@ struct Range<TIteratorMaster, TIteratorSecond, TIterators...> {
   TIteratorMaster m_end;
 
  public:
-  Size elemsPerComb;
-  Size length;
+  size_t elemsPerComb;
+  size_t length;
 
   PreviousRange previous;
   static const bool isFirst;

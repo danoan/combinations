@@ -5,7 +5,7 @@ namespace EagerRecursive {
 template<class TElementType, class TElementIterator>
 Status rec_combinations(CombinationsVector<TElementType> &combs,
                         std::vector<TElementType> &curr,
-                        Size k,
+                        size_t k,
                         TElementIterator begin,
                         TElementIterator end) {
   if (k == 0) {
@@ -27,7 +27,7 @@ Status rec_combinations(CombinationsVector<TElementType> &combs,
 }
 
 template<class TElementType, class TElementIterator>
-CombinationsVector<TElementType> combinations(Size k, TElementIterator begin, TElementIterator end) {
+CombinationsVector<TElementType> combinations(size_t k, TElementIterator begin, TElementIterator end) {
   CombinationsVector<TElementType> combs;
   std::vector<TElementType> curr;
   rec_combinations(combs, curr, k, begin, end);

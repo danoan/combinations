@@ -3,7 +3,7 @@
 namespace magLac {
 namespace Test {
 namespace Multithread {
-bool executionMultithread(Logger &logger, Size numThreads, Size n, Size k) {
+bool executionMultithread(Logger &logger, size_t numThreads, size_t n, size_t k) {
   logger << Logger::HeaderTwo << "TestExecution" << Logger::Normal;
   logger << "Num Threads:  " << numThreads << "\n"
          << "Num. Elems:  " << n << "\n"
@@ -13,11 +13,11 @@ bool executionMultithread(Logger &logger, Size numThreads, Size n, Size k) {
   logger.startTimer();
   try {
     IntVector v = Utils::createIntegerVector(n);
-    Size totalComb = 1;
+    size_t totalComb = 1;
 
-    for (Size i = 0; i < k; ++i) totalComb *= (n - i);
-    for (Size i = 1; i <= k; ++i) totalComb /= i;
-    Size queriesPerThread = (Size) std::ceil(totalComb / (1.0 * numThreads));
+    for (size_t i = 0; i < k; ++i) totalComb *= (n - i);
+    for (size_t i = 1; i <= k; ++i) totalComb /= i;
+    size_t queriesPerThread = (size_t) std::ceil(totalComb / (1.0 * numThreads));
 
     auto range = magLac::Core::addRange(v.begin(), v.end(), k);
     auto combinator = magLac::Core::Combinator(range);
@@ -37,7 +37,7 @@ bool executionMultithread(Logger &logger, Size numThreads, Size n, Size k) {
     logger << "Execution time: ";
     logger.endTimer();
 
-    Size visitedElems = 0;
+    size_t visitedElems = 0;
     for (auto data:planner) {
       visitedElems += data.mutableData.cv.size();
     }

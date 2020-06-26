@@ -4,14 +4,12 @@
 namespace magLac {
 namespace Core {
 struct Event {
-  typedef unsigned long int Size;
-
   enum Action { DIVE, BRANCH, DONE, END };
-  Event(Action action, Size cIndex, Size itMove) : action(action), cIndex(cIndex), itMove(itMove) {}
+  Event(Action action, size_t cIndex, size_t itMove) : action(action), cIndex(cIndex), itMove(itMove) {}
 
   Action action;
-  Size cIndex;
-  Size itMove;
+  size_t cIndex;
+  size_t itMove;
 };
 }
 }

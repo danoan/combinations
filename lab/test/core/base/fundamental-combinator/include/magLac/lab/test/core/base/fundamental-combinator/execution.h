@@ -7,9 +7,8 @@
 namespace magLac {
 namespace Test {
 namespace FundamentalCombinator {
-typedef unsigned long int Size;
 
-bool fundamentalCombinator(Size numElems, Size elemsPerComb, Logger &logger);
+bool fundamentalCombinator(size_t numElems, size_t elemsPerComb, Logger &logger);
 bool execution(Logger &logger);
 }
 }

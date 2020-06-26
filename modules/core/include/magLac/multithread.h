@@ -15,8 +15,7 @@ class _ThreadWrapper {
   typedef Core::MultiThread::Trigger<MyDataChunk> MyThreadTrigger;
   typedef typename MyThreadTrigger::MyThreadInfo MyThreadInfo;
 
-  typedef std::vector<MyDataChunk> ThreadDataVector;
-  typedef typename ThreadDataVector::const_iterator ThreadDataVectorIterator;
+  typedef typename MyThreadTrigger::ThreadDataVectorIterator ThreadDataVectorIterator;
 
   typedef typename MyThreadTrigger::CallbackFunction CallbackFunction;
 
@@ -33,11 +32,11 @@ class _ThreadWrapper {
   }
 
   ThreadDataVectorIterator begin() {
-    return trigger.threadDataVector.begin();
+    return trigger.begin();
   }
 
   ThreadDataVectorIterator end() {
-    return trigger.threadDataVector.end();
+    return trigger.end();
   }
 
  private:

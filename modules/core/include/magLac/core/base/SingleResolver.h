@@ -11,12 +11,11 @@ template<class TIterator>
 class Resolver {
  public:
   typedef TIterator Iterator;
-  typedef unsigned long int Size;
-  typedef std::vector<Size> VectorOfHops;
+  typedef std::vector<size_t> VectorOfHops;
 
  private:
-  TIterator moveIt(TIterator start, Size hops) {
-    for (Size i = 0; i < hops; ++i) ++start;
+  TIterator moveIt(TIterator start, size_t hops) {
+    for (size_t i = 0; i < hops; ++i) ++start;
     return start;
   }
 
@@ -30,7 +29,7 @@ class Resolver {
   Resolver &operator>>(TContainer &container) {
     if (!m_flagIsValid) throw std::runtime_error("Resolver is exhausted!");
 
-    Size pos = 0;
+    size_t pos = 0;
     for (auto it = m_hops.begin(); it != m_hops.end(); ++it, ++pos) {
       container[pos] = *moveIt(m_begin, *it);
     }

@@ -18,8 +18,6 @@ class Combinator {
   typedef Resolver<MyRange, TRange::isFirst> MyResolver;
   typedef std::vector<FundamentalCombinator> FundamentalVector;
 
-  typedef unsigned long int Size;
-
  private:
   typedef std::stack<Event> EventStack;
 
@@ -35,14 +33,14 @@ class Combinator {
   void setResolver(TResolver &resolver);
 
   template<class TResolver>
-  void setResolver(TResolver &resolver, Size proxyVectorIndex);
+  void setResolver(TResolver &resolver, size_t proxyVectorIndex);
 
  private:
-  MyRange &range;
-  FundamentalVector fv;
+  MyRange& m_range;
+  FundamentalVector m_fv;
 
-  Size numRanges;
-  EventStack es;
+  size_t m_numRanges;
+  EventStack m_es;
 };
 
 template<class TRange>

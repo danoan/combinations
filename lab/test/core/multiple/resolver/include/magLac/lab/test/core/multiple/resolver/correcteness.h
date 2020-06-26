@@ -11,7 +11,6 @@
 namespace magLac {
 namespace Test {
 namespace MultipleResolver {
-typedef unsigned long int Size;
 typedef std::vector<int> IntVector;
 
 template<class TIterator, class TValueType=typename TIterator::value_type>
