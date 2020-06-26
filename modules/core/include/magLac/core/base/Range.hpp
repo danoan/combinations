@@ -1,6 +1,8 @@
 #ifndef MAGLAC_CORE_BASE_RANGE_H
 #define MAGLAC_CORE_BASE_RANGE_H
 
+#include <algorithm>
+
 namespace magLac {
 namespace Core {
 template<typename TIteratorMaster, typename... TIterators>
@@ -10,14 +12,12 @@ struct Range {
 
   typedef Range<TIteratorMaster, TIterators...> Self;
 
-  Range(TIteratorMaster begin, TIteratorMaster end, Size elemsPerComb) :
-      begin(begin),
-      end(end),
-      elemsPerComb(elemsPerComb),
-      length(0),
-      previous(*this) {
-    for (auto it = begin; it != end; ++it, ++length);
-  }
+  Range(TIteratorMaster begin, TIteratorMaster end, Size elemsPerComb)
+      :m_begin(begin),
+       m_end(end),
+       elemsPerComb(elemsPerComb),
+       length(std::distance(begin,end)),
+       previous(*this) {}
 
   template<class TIteratorNext>
   Range<TIteratorNext, TIteratorMaster> addRange(TIteratorNext begin,
@@ -25,14 +25,19 @@ struct Range {
     return Range<TIteratorNext, TIteratorMaster>(*this, begin, end, elemsPerComb);
   }
 
-  static const bool isFirst;
+  TIteratorMaster begin() const { return m_begin;}
+  TIteratorMaster end() const { return m_end;}
 
-  TIteratorMaster begin;
-  TIteratorMaster end;
+ private:
+  TIteratorMaster m_begin;
+  TIteratorMaster m_end;
+
+ public:
   Size elemsPerComb;
   Size length;
 
   Self &previous; //Mock for initializeProxyVector in MultipleRangeCombinator.h
+  static const bool isFirst;
 };
 
 template<typename TIteratorMaster, typename TIteratorSecond, typename... TIterators>
@@ -44,10 +49,12 @@ struct Range<TIteratorMaster, TIteratorSecond, TIterators...> {
   typedef Range<TIteratorSecond, TIterators...> PreviousRange;
 
   Range(const PreviousRange &previous,
-        TIteratorMaster begin, TIteratorMaster end, Size elemsPerComb) :
-      begin(begin), end(end), elemsPerComb(elemsPerComb), length(0), previous(previous) {
-    for (auto it = begin; it != end; ++it, ++length);
-  }
+        TIteratorMaster begin, TIteratorMaster end, Size elemsPerComb)
+      :m_begin(begin),
+       m_end(end),
+       elemsPerComb(elemsPerComb),
+       length(std::distance(begin,end)),
+       previous(previous) {}
 
   template<class TIteratorNext>
   Range<TIteratorNext, TIteratorMaster, TIteratorSecond, TIterators...>
@@ -55,8 +62,14 @@ struct Range<TIteratorMaster, TIteratorSecond, TIterators...> {
     return Range<TIteratorNext, TIteratorMaster, TIteratorSecond, TIterators...>(*this, begin, end, elemsPerComb);
   }
 
-  TIteratorMaster begin;
-  TIteratorMaster end;
+  TIteratorMaster begin() const { return m_begin;}
+  TIteratorMaster end() const { return m_end;}
+
+ private:
+  TIteratorMaster m_begin;
+  TIteratorMaster m_end;
+
+ public:
   Size elemsPerComb;
   Size length;
 

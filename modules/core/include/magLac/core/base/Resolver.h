@@ -24,8 +24,8 @@ class Resolver<TRange, true> {
 
   template<typename TContainer>
   void operator>>(TContainer &container) {
-    auto sr = Single::createResolver(range.begin);
-    sr(range.begin, range.end, hops);
+    auto sr = Single::createResolver(range.begin());
+    sr(range.begin(), range.end(), hops);
     sr >> container;
   }
 
@@ -53,8 +53,8 @@ class Resolver<TRange, false> {
 
   template<typename TContainer>
   PreviousSolver &operator>>(TContainer &container) {
-    auto sr = Single::createResolver(range.begin);
-    sr(range.begin, range.end, hops);
+    auto sr = Single::createResolver(range.begin());
+    sr(range.begin(), range.end(), hops);
     sr >> container;
 
     return previousSolver;
