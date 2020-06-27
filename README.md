@@ -36,7 +36,7 @@ simpler! magLac is a generic type library and multithread ready.
     
     vector<int> outInt(2);
     vector<string> outStr(3);
-    auto explorer = takeFromEach( {2,3} {1,2,3}, {"Sun","Lake","Water","Summer"} );
+    auto explorer = takeFromEach( {2,3}, {1,2,3}, {"Sun","Lake","Water","Summer"} );
     while(explorer.next(outInt,outStr) ){ 
         for_each(outInt.begin(),outInt.end(),[](int x){ cout << x << ","; } );
         for_each(outStr.begin(),outStr.end(),[](string x){ cout << x << ","; } );
@@ -46,10 +46,16 @@ simpler! magLac is a generic type library and multithread ready.
     //Outputs
     1,2,"Sun","Lake","Water"
     1,2,"Sun","Lake","Summer"
+    1,2,"Sun","Water","Summer"
+    1,2,"Lake","Water","Summer"
     1,3,"Sun","Lake","Water"
-    1,3,"Sun","Lake","Summer"    
+    1,3,"Sun","Lake","Summer"
+    1,3,"Sun","Water","Summer"
+    1,3,"Lake","Water","Summer"    
     2,3,"Sun","Lake","Water"
-    2,3,"Sun","Lake","Summer"    
+    2,3,"Sun","Lake","Summer"
+    2,3,"Sun","Water","Summer"
+    2,3,"Lake","Water","Summer" 
 ```
 
 # Multithread execution
