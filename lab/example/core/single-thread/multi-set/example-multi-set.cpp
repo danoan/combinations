@@ -31,21 +31,17 @@ void singleType() {
 }
 
 void multipleType() {
-  size_t constexpr N = 2;
-  IntVector c1(N);
-  DoubleVector c2(N);
-  StringVector c3(N);
 
-  auto combExplorer = takeFromEach<N>({1, 2, 3}, {0.2, 0.4}, {"abc", "def", "ghi", "jklm"});
+  vector<int> outInt(2);
+  vector<string> outStr(3);
+
+  auto explorer = takeFromEach( {2,3}, {1,2,3}, {"Sun","Lake","Water","Summer"} );
   size_t count = 0;
-  while (combExplorer.next(c1, c2, c3)) {
-
-    for_each(c1.begin(), c1.end(), [](auto x) { cout << x << ","; });
-    for_each(c2.begin(), c2.end(), [](auto x) { cout << x << ","; });
-    for_each(c3.begin(), c3.end(), [](auto x) { cout << x << ","; });
-
+  while(explorer.next(outInt,outStr) ){
+    for_each(outInt.begin(),outInt.end(),[](int x){ cout << x << ","; } );
+    for_each(outStr.begin(),outStr.end(),[](string x){ cout << x << ","; } );
     cout << "\n";
-    ++count;
+    count++;
   }
 
   cout << "\n" << count << " combinations!\n" << endl;
@@ -58,7 +54,7 @@ void differentTakeValues() {
   DoubleVector c2(1);
   StringVector c3(3);
 
-  auto combExplorer = takeFromEach({2, 1, 3}, {1, 2, 3}, {0.2, 0.4}, {"abc", "def", "ghi", "jklm"});
+  auto combExplorer = takeFromEach({2, 1, 3}, {1, 2, 3}, {0.2, 0.4}, {"Sun","Lake","Water","Summer"});
   size_t count = 0;
   while (combExplorer.next(c1, c2, c3)) {
 

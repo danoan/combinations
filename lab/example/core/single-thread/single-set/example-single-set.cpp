@@ -10,8 +10,8 @@ using namespace std;
 typedef vector<int> IntVector;
 
 int main(int argc, char *argv[]) {
-  unsigned long int constexpr N = 3;
-  auto combExplorer = takeFromEach<N>({1, 2, 3, 4, 5});
+  unsigned long int constexpr N = 2;
+  auto combExplorer = takeFromEach<N>({1, 2, 3});
 
   vector<int> nextComb(N);
   int count = 0;
