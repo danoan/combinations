@@ -66,7 +66,7 @@ class Resolver<TRange, true> {
   }
 
  public:
-  TRange range;
+  TRange& range;
   VectorOfHops hops;
 
   Self &previousSolver;
@@ -95,7 +95,7 @@ class Resolver<TRange, false> {
   }
 
  public:
-  TRange range;
+  TRange& range;
   VectorOfHops hops;
 
   PreviousSolver previousSolver;

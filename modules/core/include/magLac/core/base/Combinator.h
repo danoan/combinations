@@ -43,12 +43,18 @@ class Combinator {
   EventStack m_es;
 };
 
+namespace magLac {
+namespace Private{
 template<class TRange>
 void initializeFundamentalVector(std::vector<FundamentalCombinator> &fv, const TRange &range) {
   fv.push_back(FundamentalCombinator(range.length, range.elemsPerComb));
   if (TRange::isFirst) return;
   else initializeFundamentalVector(fv, range.previous);
 }
+}
+}
+
+
 
 #include "Combinator.hpp"
 }

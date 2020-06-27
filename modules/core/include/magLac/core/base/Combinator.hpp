@@ -29,7 +29,7 @@ Combinator<TRange>::Combinator(MyRange &range):
   m_es.push(Event(Event::END, 0, 0));
   m_es.push(Event(Event::DIVE, 0, 0));
 
-  initializeFundamentalVector(m_fv, range);
+  magLac::Private::initializeFundamentalVector(m_fv, range);
   m_numRanges = m_fv.size();
 }
 
