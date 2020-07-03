@@ -14,8 +14,7 @@ using namespace magLac::Core;
 template<class TListType, class... TArgs>
 auto _initRange(unsigned int N,
                 const std::initializer_list<TListType> &p_list,
-                const std::initializer_list<TArgs> &... p_args) -> Range<decltype(p_list.begin()),
-                                                                         decltype(p_args.begin())...> {
+                const std::initializer_list<TArgs> &... p_args){
   typedef Range<decltype(p_list.begin()), decltype(p_args.begin())...> OutputType;
   if constexpr (sizeof...(TArgs) == 0) {
     return OutputType(p_list.begin(), p_list.end(), N);
@@ -28,8 +27,7 @@ auto _initRange(unsigned int N,
 template<class TNValuesIterator, class TListType, class... TArgs>
 auto _initRange(const TNValuesIterator itNValues,
                 const std::initializer_list<TListType> &p_list,
-                const std::initializer_list<TArgs> &... p_args) -> Range<decltype(p_list.begin()),
-                                                                         decltype(p_args.begin())...> {
+                const std::initializer_list<TArgs> &... p_args){
   typedef Range<decltype(p_list.begin()), decltype(p_args.begin())...> OutputType;
   if constexpr (sizeof...(TArgs) == 0) {
     return OutputType(p_list.begin(), p_list.end(), *itNValues);
@@ -82,15 +80,13 @@ class _CombinatorWrapper {
 
 template<unsigned int N, class TListType, class... TArgs>
 auto initRange(const std::initializer_list<TListType> &p_list,
-               const std::initializer_list<TArgs> &... p_args) -> Core::Range<decltype(p_list.begin()),
-                                                                              decltype(p_args.begin())...> {
+               const std::initializer_list<TArgs> &... p_args){
   return Private::_initRange(N, p_list, p_args...);
 }
 
 template<unsigned int N, class TListType, class... TArgs>
 auto takeFromEach(const std::initializer_list<TListType> &p_list,
-                  const std::initializer_list<TArgs> &... p_args) -> Private::_CombinatorWrapper<decltype(Private::initRange<
-    N>(p_list, p_args...))> {
+                  const std::initializer_list<TArgs> &... p_args) {
   auto range = Private::initRange<N>(p_list, p_args...);
   return Private::_CombinatorWrapper(range);
 }
@@ -98,8 +94,7 @@ auto takeFromEach(const std::initializer_list<TListType> &p_list,
 template<class TListType, class... TArgs>
 auto initRange(const std::initializer_list<size_t> &NValues,
                const std::initializer_list<TListType> &p_list,
-               const std::initializer_list<TArgs> &... p_args) -> Core::Range<decltype(p_list.begin()),
-                                                                              decltype(p_args.begin())...> {
+               const std::initializer_list<TArgs> &... p_args){
   if (sizeof...(p_args) != NValues.size() - 1)
     throw std::runtime_error("NValues length is different than number of sets");
   else return Private::_initRange(NValues.begin(), p_list, p_args...);
@@ -108,10 +103,7 @@ auto initRange(const std::initializer_list<size_t> &NValues,
 template<class TListType, class... TArgs>
 auto takeFromEach(const std::initializer_list<size_t> &NValues,
                   const std::initializer_list<TListType> &p_list,
-                  const std::initializer_list<TArgs> &... p_args) -> Private::_CombinatorWrapper<decltype(Private::initRange(
-    NValues,
-    p_list,
-    p_args...))> {
+                  const std::initializer_list<TArgs> &... p_args){
   auto range = Private::initRange(NValues, p_list, p_args...);
   return Private::_CombinatorWrapper(range);
 }
