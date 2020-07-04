@@ -19,7 +19,12 @@ class BaseResolver {
   }
 
  public:
-  BaseResolver(TIterator begin,VectorOfHops &hops)
+  BaseResolver(TIterator begin,const VectorOfHops &hops)
+      :m_begin(begin),
+       m_hops(hops),
+       m_flagIsValid(true){}
+
+  BaseResolver(TIterator begin,VectorOfHops&& hops)
       :m_begin(begin),
        m_hops(hops),
        m_flagIsValid(true){}
@@ -51,54 +56,63 @@ class Resolver {
 template<class TRange>
 class Resolver<TRange, true> {
  public:
-  typedef std::vector<size_t> VectorOfHops;
   typedef Resolver<TRange, true> Self;
 
+  typedef std::vector<size_t> VectorOfHops;
+  typedef Resolver<TRange, true> PreviousSolver;
+
  public:
-  Resolver(TRange &range) : range(range), previousSolver(*this) {};
+  Resolver(const TRange &range) : range(range) {};
+  Resolver(const Self& other)=delete;
+  Self& operator=(const Self& other)=delete;
 
   void set(const VectorOfHops &hops) { this->hops = hops; }
 
   template<typename TContainer>
-  void operator>>(TContainer &container) {
-    auto sr = BaseResolver(range.begin(), hops);
+  void operator>>(TContainer &container) const {
+    auto sr = BaseResolver(range.begin(), std::move(hops) );
     sr >> container;
   }
 
  public:
-  TRange& range;
+  const TRange& range;
   VectorOfHops hops;
 
-  Self &previousSolver;
+  Self* previousSolver{nullptr};
 };
 
 template<class TRange>
 class Resolver<TRange, false> {
  public:
+  typedef Resolver<TRange,false> Self;
   typedef std::vector<size_t> VectorOfHops;
 
   typedef typename TRange::PreviousRange PreviousRange;
   typedef Resolver<PreviousRange, PreviousRange::isFirst> PreviousSolver;
 
  public:
-  Resolver(TRange &range) : range(range),
-                            previousSolver(PreviousSolver(range.previous)) {}
+  Resolver(const TRange &range) : range(range),
+                            previousSolver(new PreviousSolver(range.previous)) {}
+  Resolver(const Self& other)=delete;
+  Self& operator=(const Self& other)=delete;
+
+  ~Resolver(){ delete previousSolver;}
 
   void set(const VectorOfHops &hops) { this->hops = hops; }
 
   template<typename TContainer>
-  PreviousSolver &operator>>(TContainer &container) {
-    auto sr = BaseResolver(range.begin(), hops);
+  const PreviousSolver& operator>>(TContainer &container) const {
+    auto sr = BaseResolver(range.begin(), std::move(hops) );
     sr >> container;
 
-    return previousSolver;
+    return *previousSolver;
   }
 
  public:
-  TRange& range;
+  const TRange& range;
   VectorOfHops hops;
 
-  PreviousSolver previousSolver;
+  PreviousSolver* previousSolver;
 };
 
 }

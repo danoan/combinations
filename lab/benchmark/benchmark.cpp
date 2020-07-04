@@ -93,7 +93,8 @@ CombinationsResult lazyGeneric(const InputData &id) {
 
   auto range = magLac::Core::addRange(intV.begin(), intV.end(), id.elemsPerComb);
   auto combinator = magLac::Core::Combinator(range);
-  auto resolver = combinator.resolver();
+
+  decltype(combinator)::MyResolver& resolver = combinator.resolver();
 
   std::stringstream ss;
   magLac::Logger logger(ss, false);

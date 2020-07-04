@@ -52,7 +52,7 @@ class _CombinatorWrapper {
 
   template<class TContainer, class... TArgs>
   bool next(TContainer &container, TArgs &... args) {
-    MyResolver resolver = combinator.resolver();
+    MyResolver& resolver = combinator.resolver();
     bool hasNext = combinator.next(resolver);
     fillUp(resolver, container, args...);
 
@@ -61,9 +61,10 @@ class _CombinatorWrapper {
 
  private:
   template<class TResolver, class TContainer, class... TArgs>
-  void fillUp(TResolver &resolver, TContainer &container, TArgs &... args) {
+  void fillUp(const TResolver &resolver, TContainer &container, TArgs &... args) {
+    typedef typename TResolver::PreviousSolver PreviousSolver;
     if constexpr(sizeof...(TArgs) != 0) {
-      auto _r = resolver >> container;
+      const PreviousSolver& _r = resolver >> container;
       fillUp(_r, args...);
     } else {
       resolver >> container;

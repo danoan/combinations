@@ -58,7 +58,7 @@ class Trigger {
   ThreadDataVectorIterator end() const{ return m_threadDataVector.end(); }
 
   void start(MyCombinator &combinatorModel, const ConstantData &constantData, CallbackFunction cbf) {
-    MyResolver mockValue = combinatorModel.resolver();
+    MyResolver& mockValue = combinatorModel.resolver();
 
     for (size_t i = 0; i < m_numThreads; ++i) {
       this->m_LCVector[i] = new MyCombinator(combinatorModel);
@@ -110,9 +110,10 @@ class Trigger {
  private:
 
   void threadStart(MyDataChunk &dc, ThreadControl tc, CallbackFunction cbf) {
+    typedef typename std::remove_pointer< decltype(dc.combinatorPt) >::type::MyResolver ResolverType;
     dc.restart();
 
-    auto resolver = dc.combinatorPt->resolver();
+    ResolverType& resolver = dc.combinatorPt->resolver();
     int q = 0;
     while (dc.combinatorPt->next(resolver) &&
         q < tc.maxQueries &&

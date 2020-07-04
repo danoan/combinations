@@ -27,10 +27,10 @@ bool correcteness(Logger &logger) {
   std::vector<size_t> hops3 = {1, 2};
 
   mr.set(hops1);
-  auto &previous = mr.previousSolver;
-  previous.set(hops2);
-  auto &previous2 = previous.previousSolver;
-  previous2.set(hops3);
+  auto *previous = mr.previousSolver;
+  previous->set(hops2);
+  auto *previous2 = previous->previousSolver;
+  previous2->set(hops3);
 
   IntVector c1(2);
   IntVector c2(2);

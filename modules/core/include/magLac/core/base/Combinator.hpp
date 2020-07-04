@@ -2,25 +2,21 @@
 
 template<class TRange>
 template<class TResolver>
-void Combinator<TRange>::setResolver(TResolver &resolver) {
+void Combinator<TRange>::setResolver(TResolver& resolver) {
   setResolver(resolver, 0);
 }
 
 template<class TRange>
 template<class TResolver>
-void Combinator<TRange>::setResolver(TResolver &resolver, size_t proxyVectorIndex) {
+void Combinator<TRange>::setResolver(TResolver& resolver, size_t proxyVectorIndex) {
 
   if (proxyVectorIndex < m_numRanges) {
     resolver.set(m_fv[proxyVectorIndex].get());
-    setResolver(resolver.previousSolver, proxyVectorIndex + 1);
+    setResolver( *(resolver.previousSolver), proxyVectorIndex + 1);
   }
 
 }
 
-template<class TRange>
-typename Combinator<TRange>::MyResolver Combinator<TRange>::resolver() {
-  return MyResolver(m_range);
-}
 
 template<class TRange>
 Combinator<TRange>::Combinator(MyRange &range):
@@ -31,6 +27,8 @@ Combinator<TRange>::Combinator(MyRange &range):
 
   magLac::Private::initializeFundamentalVector(m_fv, range);
   m_numRanges = m_fv.size();
+
+  m_resolver = new MyResolver(m_range);
 }
 
 template<class TRange>

@@ -14,6 +14,8 @@ namespace Core {
 template<class TRange>
 class Combinator {
  public:
+  typedef Combinator<TRange> Self;
+
   typedef TRange MyRange;
   typedef Resolver<MyRange, TRange::isFirst> MyResolver;
   typedef std::vector<FundamentalCombinator> FundamentalVector;
@@ -23,10 +25,20 @@ class Combinator {
 
  public:
   Combinator(MyRange &range);
+  Combinator(const Combinator& other)
+  :m_range(other.m_range),
+  m_fv(other.m_fv),
+  m_numRanges(other.m_numRanges),
+  m_es(other.m_es){
+    m_resolver = new MyResolver(m_range);
+  };
+
+  ~Combinator(){ /*std::cout << "Delete combinator" << std::endl;*/ delete m_resolver;}
 
   bool next(MyResolver &resolver);
 
-  MyResolver resolver();
+  MyResolver& resolver(){ return *m_resolver; };
+  MyRange& range(){ return m_range; }
 
  private:
   template<class TResolver>
@@ -38,6 +50,8 @@ class Combinator {
  private:
   MyRange& m_range;
   FundamentalVector m_fv;
+
+  MyResolver* m_resolver;
 
   size_t m_numRanges;
   EventStack m_es;
