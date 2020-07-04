@@ -17,10 +17,10 @@ auto _initRange(unsigned int N,
                 const std::initializer_list<TArgs> &... p_args){
   typedef Range<decltype(p_list.begin()), decltype(p_args.begin())...> OutputType;
   if constexpr (sizeof...(TArgs) == 0) {
-    return OutputType(p_list.begin(), p_list.end(), N);
+    return new OutputType(p_list.begin(), p_list.end(), N);
   } else {
     auto r = _initRange(N, p_args...);
-    return r.addRange(p_list.begin(), p_list.end(), N);
+    return r->addRange(p_list.begin(), p_list.end(), N);
   }
 }
 
@@ -30,10 +30,10 @@ auto _initRange(const TNValuesIterator itNValues,
                 const std::initializer_list<TArgs> &... p_args){
   typedef Range<decltype(p_list.begin()), decltype(p_args.begin())...> OutputType;
   if constexpr (sizeof...(TArgs) == 0) {
-    return OutputType(p_list.begin(), p_list.end(), *itNValues);
+    return new OutputType(p_list.begin(), p_list.end(), *itNValues);
   } else {
     auto r = _initRange(itNValues + 1, p_args...);
-    return r.addRange(p_list.begin(), p_list.end(), *itNValues);
+    return r->addRange(p_list.begin(), p_list.end(), *itNValues);
   }
 }
 
@@ -46,9 +46,15 @@ class _CombinatorWrapper {
   typedef typename MyCombinator::MyResolver MyResolver;
 
  public:
-  _CombinatorWrapper(MyRange &range)
+  _CombinatorWrapper(MyRange* range)
       : range(range),
-        combinator(this->range) {}
+        combinator(*this->range) {}
+
+
+  ~_CombinatorWrapper(){ delete range; }
+  _CombinatorWrapper(const _CombinatorWrapper& other)=delete;
+  _CombinatorWrapper& operator=(const _CombinatorWrapper& other)=delete;
+
 
   template<class TContainer, class... TArgs>
   bool next(TContainer &container, TArgs &... args) {
@@ -73,7 +79,7 @@ class _CombinatorWrapper {
   }
 
  public:
-  MyRange range;
+  MyRange* range;
   MyCombinator combinator;
 
 };

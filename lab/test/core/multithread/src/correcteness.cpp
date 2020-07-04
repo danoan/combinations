@@ -36,8 +36,9 @@ bool correctenessMultithread(Logger &logger,
   for (size_t i = 1; i <= k; ++i) totalComb /= i;
   size_t queriesPerThread = (size_t) std::ceil(totalComb / (1.0 * numThreads));
 
+
   auto range = magLac::Core::addRange(v.begin(), v.end(), k);
-  auto combinator = magLac::Core::Combinator(range);
+  auto combinator = magLac::Core::Combinator(*range);
 
   CorrectData data;
   auto planner = slice(combinator, data, numThreads, queriesPerThread);
@@ -78,6 +79,7 @@ bool correctenessMultithread(Logger &logger,
 
   logger << "Passed: true\n";
 
+  delete range;
   return totalComb == visitedElems;
 }
 

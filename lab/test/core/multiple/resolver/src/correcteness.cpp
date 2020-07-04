@@ -19,8 +19,8 @@ bool correcteness(Logger &logger) {
   auto b3 = v.begin() + 6;
   auto e3 = v.end();
 
-  auto range = addRange(b1, e1, 2).addRange(b2, e2, 2).addRange(b3, e3, 2);
-  auto mr = Resolver<decltype(range),false>(range);
+  auto range = addRange(b1, e1, 2)->addRange(b2, e2, 2)->addRange(b3, e3, 2);
+  auto mr = Resolver< std::remove_pointer< decltype(range) >::type,false>(*range);
 
   std::vector<size_t> hops1 = {0, 1};
   std::vector<size_t> hops2 = {0, 2};
@@ -45,6 +45,7 @@ bool correcteness(Logger &logger) {
 
   logger << "Passed: " << flag;
 
+  delete range;
   return flag;
 }
 }

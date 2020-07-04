@@ -63,7 +63,7 @@ template<class TRange>
 void initializeFundamentalVector(std::vector<FundamentalCombinator> &fv, const TRange &range) {
   fv.push_back(FundamentalCombinator(range.length, range.elemsPerComb));
   if (TRange::isFirst) return;
-  else initializeFundamentalVector(fv, range.previous);
+  else initializeFundamentalVector(fv, *(range.previous) );
 }
 }
 }

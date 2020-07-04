@@ -92,7 +92,7 @@ CombinationsResult lazyGeneric(const InputData &id) {
   auto intV = magLac::Utils::createIntegerVector(id.numElems);
 
   auto range = magLac::Core::addRange(intV.begin(), intV.end(), id.elemsPerComb);
-  auto combinator = magLac::Core::Combinator(range);
+  auto combinator = magLac::Core::Combinator(*range);
 
   decltype(combinator)::MyResolver& resolver = combinator.resolver();
 
@@ -103,6 +103,7 @@ CombinationsResult lazyGeneric(const InputData &id) {
   while (combinator.next(resolver)) ++totalCombs;
   logger.endTimer();
 
+  delete range;
   return CombinationsResult(ss.str(), totalCombs);
 }
 
@@ -110,7 +111,7 @@ CombinationsResult multithreadLazyGeneric(const InputData &id) {
   auto intV = magLac::Utils::createIntegerVector(id.numElems);
 
   auto range = magLac::Core::addRange(intV.begin(), intV.end(), id.elemsPerComb);
-  auto combinator = magLac::Core::Combinator(range);
+  auto combinator = magLac::Core::Combinator(*range);
 
   struct MyThreadData {
     struct MutableData {
@@ -144,6 +145,52 @@ CombinationsResult multithreadLazyGeneric(const InputData &id) {
     totalCombs += data.mutableData.totalCombs;
   }
 
+  delete range;
+  return CombinationsResult(ss.str(), totalCombs);
+}
+
+CombinationsResult multithreadLazyGenericMultirange(const InputData &id) {
+  auto intV = magLac::Utils::createIntegerVector(id.numElems);
+
+  auto range = magLac::Core::addRange(intV.begin(), intV.end(), id.elemsPerComb)
+      ->addRange(intV.begin(), intV.end(), id.elemsPerComb)
+      ->addRange(intV.begin(), intV.end(), id.elemsPerComb);
+
+  auto combinator = magLac::Core::Combinator(*range);
+
+  struct MyThreadData {
+    struct MutableData {
+      MutableData() : totalCombs(0) {}
+      void restart() {};
+      uint totalCombs;
+    };
+
+    struct ConstantData {};
+
+    MutableData mutableData;
+    ConstantData constantData;
+  };
+
+  MyThreadData data;
+  auto planner = magLac::slice(combinator, data, std::thread::hardware_concurrency(), QUERIES_PER_THREAD);
+  typedef decltype(planner)::MyThreadInfo MyThreadInfo;
+
+  std::stringstream ss;
+  magLac::Logger logger(ss, false);
+  logger.startTimer();
+
+  uint totalCombs = 0;
+  planner.run([](MyThreadInfo &&ti) mutable {
+    ++ti.data.mutableData.totalCombs;
+  });
+
+  logger.endTimer();
+
+  for (auto data:planner) {
+    totalCombs += data.mutableData.totalCombs;
+  }
+
+  delete range;
   return CombinationsResult(ss.str(), totalCombs);
 }
 
@@ -159,11 +206,12 @@ int main(int argc, char *argv[]) {
 
   std::cout << "*******Comparison Results*******\n\n";
 
-  printResults(eagerRecursive(id), "Eager Recursive");
-  printResults(lazyRecursive(id), "Lazy Recursive");
-  printResults(lazyNonRecursive(id), "Lazy NonRecursive");
-  printResults(lazyGeneric(id), "Lazy Generic");
-  printResults(multithreadLazyGeneric(id), "Lazy Generic Multithread");
+//  printResults(eagerRecursive(id), "Eager Recursive");
+//  printResults(lazyRecursive(id), "Lazy Recursive");
+//  printResults(lazyNonRecursive(id), "Lazy NonRecursive");
+//  printResults(lazyGeneric(id), "Lazy Generic");
+//  printResults(multithreadLazyGeneric(id), "Lazy Generic Multithread");
+  printResults(multithreadLazyGenericMultirange(id), "Lazy Generic Multithread Multirange");
 
   return 0;
 }

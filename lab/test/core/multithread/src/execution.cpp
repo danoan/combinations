@@ -20,7 +20,7 @@ bool executionMultithread(Logger &logger, size_t numThreads, size_t n, size_t k)
     size_t queriesPerThread = (size_t) std::ceil(totalComb / (1.0 * numThreads));
 
     auto range = magLac::Core::addRange(v.begin(), v.end(), k);
-    auto combinator = magLac::Core::Combinator(range);
+    auto combinator = magLac::Core::Combinator(*range);
 
     ExecutionData data;
     auto planner = slice(combinator, data, numThreads, queriesPerThread);
@@ -44,6 +44,8 @@ bool executionMultithread(Logger &logger, size_t numThreads, size_t n, size_t k)
 
     logger << "Expected Combinations: " << totalComb << "\n";
     logger << "Computed Combinations: " << visitedElems << "\n\n";
+
+    delete range;
   }
   catch (std::exception &ex) {
     logger << "Error: " << ex.what();
@@ -52,6 +54,7 @@ bool executionMultithread(Logger &logger, size_t numThreads, size_t n, size_t k)
   logger.endTimer();
 
   logger << "Passed: " << flag;
+
   return flag;
 }
 

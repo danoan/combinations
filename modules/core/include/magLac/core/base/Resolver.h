@@ -92,7 +92,7 @@ class Resolver<TRange, false> {
 
  public:
   Resolver(const TRange &range) : range(range),
-                            previousSolver(new PreviousSolver(range.previous)) {}
+                            previousSolver(new PreviousSolver(*range.previous)) {}
   Resolver(const Self& other)=delete;
   Self& operator=(const Self& other)=delete;
 
