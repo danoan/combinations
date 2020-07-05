@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
   auto combExplorer = takeFromEach<2>({1, 2, 3}, {4, 5, 6}, {7, 8, 9, 10});
 
   MyThreadData data;
-  auto theThread = slice(combExplorer.combinator, data, numThreads, queriesPerThread);
+  auto theThread = slice(combExplorer.combinator(), data, numThreads, queriesPerThread);
   typedef decltype(theThread)::MyThreadInfo MyThreadInfo;
 
   theThread.run([](MyThreadInfo &&ti) mutable {

@@ -33,7 +33,7 @@ class Combinator {
     m_resolver = new MyResolver(m_range);
   };
 
-  ~Combinator(){ /*std::cout << "Delete combinator" << std::endl;*/ delete m_resolver;}
+  ~Combinator(){ delete m_resolver;}
 
   bool next(MyResolver &resolver);
 

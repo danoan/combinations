@@ -24,6 +24,10 @@ struct Range {
     return new Range<TIteratorNext, TIteratorMaster>(this, begin, end, elemsPerComb);
   }
 
+  auto close(){
+    return std::unique_ptr<Self>(this);
+  }
+
   TIteratorMaster begin() const { return m_begin;}
   TIteratorMaster end() const { return m_end;}
 
@@ -56,9 +60,14 @@ struct Range<TIteratorMaster, TIteratorSecond, TIterators...> {
 
   ~Range(){ delete previous;}
 
+
   template<class TIteratorNext>
   auto addRange(TIteratorNext begin, TIteratorNext end, size_t elemsPerComb) const {
     return new Range<TIteratorNext, TIteratorMaster, TIteratorSecond, TIterators...>(this, begin, end, elemsPerComb);
+  }
+
+  auto close(){
+    return std::unique_ptr<Self>(this);
   }
 
   TIteratorMaster begin() const { return m_begin;}

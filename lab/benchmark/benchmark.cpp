@@ -91,7 +91,7 @@ CombinationsResult lazyNonRecursive(const InputData &id) {
 CombinationsResult lazyGeneric(const InputData &id) {
   auto intV = magLac::Utils::createIntegerVector(id.numElems);
 
-  auto range = magLac::Core::addRange(intV.begin(), intV.end(), id.elemsPerComb);
+  auto range = magLac::Core::addRange(intV.begin(), intV.end(), id.elemsPerComb)->close();
   auto combinator = magLac::Core::Combinator(*range);
 
   decltype(combinator)::MyResolver& resolver = combinator.resolver();
@@ -103,14 +103,13 @@ CombinationsResult lazyGeneric(const InputData &id) {
   while (combinator.next(resolver)) ++totalCombs;
   logger.endTimer();
 
-  delete range;
   return CombinationsResult(ss.str(), totalCombs);
 }
 
 CombinationsResult multithreadLazyGeneric(const InputData &id) {
   auto intV = magLac::Utils::createIntegerVector(id.numElems);
 
-  auto range = magLac::Core::addRange(intV.begin(), intV.end(), id.elemsPerComb);
+  auto range = magLac::Core::addRange(intV.begin(), intV.end(), id.elemsPerComb)->close();
   auto combinator = magLac::Core::Combinator(*range);
 
   struct MyThreadData {
@@ -145,7 +144,6 @@ CombinationsResult multithreadLazyGeneric(const InputData &id) {
     totalCombs += data.mutableData.totalCombs;
   }
 
-  delete range;
   return CombinationsResult(ss.str(), totalCombs);
 }
 
@@ -154,7 +152,8 @@ CombinationsResult multithreadLazyGenericMultirange(const InputData &id) {
 
   auto range = magLac::Core::addRange(intV.begin(), intV.end(), id.elemsPerComb)
       ->addRange(intV.begin(), intV.end(), id.elemsPerComb)
-      ->addRange(intV.begin(), intV.end(), id.elemsPerComb);
+      ->addRange(intV.begin(), intV.end(), id.elemsPerComb)
+      ->close();
 
   auto combinator = magLac::Core::Combinator(*range);
 
@@ -190,7 +189,6 @@ CombinationsResult multithreadLazyGenericMultirange(const InputData &id) {
     totalCombs += data.mutableData.totalCombs;
   }
 
-  delete range;
   return CombinationsResult(ss.str(), totalCombs);
 }
 
@@ -206,11 +204,11 @@ int main(int argc, char *argv[]) {
 
   std::cout << "*******Comparison Results*******\n\n";
 
-//  printResults(eagerRecursive(id), "Eager Recursive");
-//  printResults(lazyRecursive(id), "Lazy Recursive");
-//  printResults(lazyNonRecursive(id), "Lazy NonRecursive");
-//  printResults(lazyGeneric(id), "Lazy Generic");
-//  printResults(multithreadLazyGeneric(id), "Lazy Generic Multithread");
+  printResults(eagerRecursive(id), "Eager Recursive");
+  printResults(lazyRecursive(id), "Lazy Recursive");
+  printResults(lazyNonRecursive(id), "Lazy NonRecursive");
+  printResults(lazyGeneric(id), "Lazy Generic");
+  printResults(multithreadLazyGeneric(id), "Lazy Generic Multithread");
   printResults(multithreadLazyGenericMultirange(id), "Lazy Generic Multithread Multirange");
 
   return 0;
