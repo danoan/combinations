@@ -8,29 +8,23 @@
 #include "magLac/core/base/Resolver.h"
 #include "magLac/lab/logger/logger.h"
 
-namespace magLac
-{
-    namespace Test
-    {
-        namespace MultipleResolver
-        {
-            typedef unsigned long int Size;
-            typedef std::vector<int> IntVector;
+namespace magLac {
+namespace Test {
+namespace MultipleResolver {
+typedef std::vector<int> IntVector;
 
-            template<class TIterator, class TValueType=typename TIterator::value_type>
-            bool check(TIterator begin, TIterator end, const std::set<TValueType>& checkSet)
-            {
-                for(auto it=begin;it!=end;++it)
-                {
-                    if( checkSet.find(*it)==checkSet.end() ) return false;
-                }
+template<class TIterator, class TValueType=typename TIterator::value_type>
+bool check(TIterator begin, TIterator end, const std::set<TValueType> &checkSet) {
+  for (auto it = begin; it != end; ++it) {
+    if (checkSet.find(*it) == checkSet.end()) return false;
+  }
 
-                return true;
-            }
+  return true;
+}
 
-            bool correcteness(Logger& logger);
-        }
-    }
+bool correcteness(Logger &logger);
+}
+}
 }
 
 #endif //MAGLAC_LAB_TEST_CORE_MULTIPLERESOLVER_CORRECTENESS_H

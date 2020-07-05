@@ -15,22 +15,21 @@
 
 using namespace magLac::Test;
 
-int main(int argc, char* argv[])
-{
-    magLac::Logger logger(std::cout,false);
+int main(int argc, char *argv[]) {
+  magLac::Logger logger(std::cout, false);
 
-    FundamentalCombinator::correcteness(logger);
-    FundamentalCombinator::execution(logger);
+  FundamentalCombinator::correcteness(logger);
+  FundamentalCombinator::execution(logger);
 
-    MultipleResolver::correcteness(logger);
-    MultipleCombinator::correcteness(logger);
+  MultipleResolver::correcteness(logger);
+  MultipleCombinator::correcteness(logger);
 
-    SingleCombinator::correcteness(logger);
+  SingleCombinator::correcteness(logger);
 
-    Multithread::correcteness(logger);
-    Multithread::execution(logger);
+  Multithread::correcteness(logger);
+  Multithread::execution(logger);
 
-    Range::correcteness(logger);
+  Range::correcteness(logger);
 
-    return 0;
+  return 0;
 }

@@ -1,90 +1,101 @@
 #ifndef MAGLAC_CORE_BASE_RANGE_H
 #define MAGLAC_CORE_BASE_RANGE_H
 
-namespace magLac
-{
-    namespace Core
-    {
-        template<typename TIteratorMaster, typename... TIterators>
-        struct Range
-        {
-            typedef unsigned long int Size;
-            typedef TIteratorMaster IteratorType;
+#include <algorithm>
+#include <memory>
 
-            typedef Range<TIteratorMaster, TIterators...> Self;
+namespace magLac {
+namespace Core {
+template<typename TIteratorMaster, typename... TIterators>
+struct Range {
+  typedef TIteratorMaster IteratorType;
 
-            Range(TIteratorMaster begin, TIteratorMaster end, Size elemsPerComb) :
-                    begin(begin),
-                    end(end),
-                    elemsPerComb(elemsPerComb),
-                    length(0),
-                    previous(*this)
-            {
-                for (auto it = begin; it != end; ++it, ++length);
-            }
+  typedef Range<TIteratorMaster, TIterators...> Self;
 
-            template<class TIteratorNext>
-            Range<TIteratorNext, TIteratorMaster> addRange(TIteratorNext begin,
-                                                           TIteratorNext end, Size elemsPerComb)
-            {
-                return Range<TIteratorNext, TIteratorMaster>(*this, begin, end, elemsPerComb);
-            }
+  Range(TIteratorMaster begin, TIteratorMaster end, size_t elemsPerComb)
+      :m_begin(begin),
+       m_end(end),
+       elemsPerComb(elemsPerComb),
+       length(std::distance(begin,end)) {}
 
-            static const bool isFirst;
+  template<class TIteratorNext>
+  auto addRange(TIteratorNext begin,
+                TIteratorNext end, size_t elemsPerComb) const {
+    return new Range<TIteratorNext, TIteratorMaster>(this, begin, end, elemsPerComb);
+  }
 
-            TIteratorMaster begin;
-            TIteratorMaster end;
-            Size elemsPerComb;
-            Size length;
+  auto close(){
+    return std::unique_ptr<Self>(this);
+  }
 
-            Self &previous; //Mock for initializeProxyVector in MultipleRangeCombinator.h
-        };
+  TIteratorMaster begin() const { return m_begin;}
+  TIteratorMaster end() const { return m_end;}
 
-        template<typename TIteratorMaster, typename TIteratorSecond, typename... TIterators>
-        struct Range<TIteratorMaster, TIteratorSecond, TIterators...>
-        {
-            typedef unsigned long int Size;
-            typedef TIteratorMaster IteratorType;
+ private:
+  TIteratorMaster m_begin;
+  TIteratorMaster m_end;
 
-            typedef Range<TIteratorMaster, TIteratorSecond, TIterators...> Self;
-            typedef Range<TIteratorSecond, TIterators...> PreviousRange;
+ public:
+  size_t elemsPerComb;
+  size_t length;
 
-            Range(const PreviousRange &previous,
-                  TIteratorMaster begin, TIteratorMaster end, Size elemsPerComb) :
-                    begin(begin), end(end), elemsPerComb(elemsPerComb),length(0),previous(previous)
-            {
-                for (auto it = begin; it != end; ++it, ++length);
-            }
+  Self* previous{nullptr};
+  static const bool isFirst;
+};
 
-            template<class TIteratorNext>
-            Range<TIteratorNext, TIteratorMaster, TIteratorSecond, TIterators...>
-            addRange(TIteratorNext begin, TIteratorNext end, Size elemsPerComb)
-            {
-                return Range<TIteratorNext, TIteratorMaster, TIteratorSecond, TIterators...>(*this, begin, end, elemsPerComb);
-            }
+template<typename TIteratorMaster, typename TIteratorSecond, typename... TIterators>
+struct Range<TIteratorMaster, TIteratorSecond, TIterators...> {
+  typedef TIteratorMaster IteratorType;
+
+  typedef Range<TIteratorMaster, TIteratorSecond, TIterators...> Self;
+  typedef Range<TIteratorSecond, TIterators...> PreviousRange;
+
+  Range(const PreviousRange* previous,
+        TIteratorMaster begin, TIteratorMaster end, size_t elemsPerComb)
+      :m_begin(begin),
+       m_end(end),
+       elemsPerComb(elemsPerComb),
+       length(std::distance(begin,end)),
+       previous(previous) {}
+
+  ~Range(){ delete previous;}
 
 
-            TIteratorMaster begin;
-            TIteratorMaster end;
-            Size elemsPerComb;
-            Size length;
+  template<class TIteratorNext>
+  auto addRange(TIteratorNext begin, TIteratorNext end, size_t elemsPerComb) const {
+    return new Range<TIteratorNext, TIteratorMaster, TIteratorSecond, TIterators...>(this, begin, end, elemsPerComb);
+  }
 
-            PreviousRange previous;
-            static const bool isFirst;
-        };
+  auto close(){
+    return std::unique_ptr<Self>(this);
+  }
 
-        template<typename TIterator>
-        Range<TIterator> addRange(TIterator begin, TIterator end, unsigned long int elemsPerComb)
-        {
-            return Range<TIterator>(begin, end, elemsPerComb);
-        }
+  TIteratorMaster begin() const { return m_begin;}
+  TIteratorMaster end() const { return m_end;}
 
-        template<typename TIteratorMaster, typename TIteratorSecond, typename... TIterators>
-        const bool Range<TIteratorMaster,TIteratorSecond,TIterators...>::isFirst = false;
+ private:
+  TIteratorMaster m_begin;
+  TIteratorMaster m_end;
 
-        template<typename TIteratorMaster, typename... TIterators>
-        const bool Range<TIteratorMaster,TIterators...>::isFirst = true;
-    }
+ public:
+  size_t elemsPerComb;
+  size_t length;
+
+  const PreviousRange* previous;
+  static const bool isFirst;
+};
+
+template<typename TIterator>
+Range<TIterator>* addRange(TIterator begin, TIterator end, unsigned long int elemsPerComb) {
+  return new Range<TIterator>(begin, end, elemsPerComb);
+}
+
+template<typename TIteratorMaster, typename TIteratorSecond, typename... TIterators>
+const bool Range<TIteratorMaster, TIteratorSecond, TIterators...>::isFirst = false;
+
+template<typename TIteratorMaster, typename... TIterators>
+const bool Range<TIteratorMaster, TIterators...>::isFirst = true;
+}
 }
 
 #endif//MAGLAC_CORE_BASE_RANGE_H

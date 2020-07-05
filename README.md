@@ -36,7 +36,7 @@ simpler! magLac is a generic type library and multithread ready.
     
     vector<int> outInt(2);
     vector<string> outStr(3);
-    auto explorer = takeFromEach( {2,3} {1,2,3}, {"Sun","Lake","Water","Summer"} );
+    auto explorer = takeFromEach( {2,3}, {1,2,3}, {"Sun","Lake","Water","Summer"} );
     while(explorer.next(outInt,outStr) ){ 
         for_each(outInt.begin(),outInt.end(),[](int x){ cout << x << ","; } );
         for_each(outStr.begin(),outStr.end(),[](string x){ cout << x << ","; } );
@@ -55,7 +55,7 @@ simpler! magLac is a generic type library and multithread ready.
     2,3,"Sun","Lake","Water"
     2,3,"Sun","Lake","Summer"
     2,3,"Sun","Water","Summer"
-    2,3,"Lake","Water","Summer"    
+    2,3,"Lake","Water","Summer" 
 ```
 
 # Multithread execution
@@ -68,15 +68,15 @@ simpler! magLac is a generic type library and multithread ready.
     using namespace magLac::Core;
     
     int sizeCombination=5;
-    int numThreads = 4;
-    int queriesPerThread = 1000;
+    int m_numThreads = 4;
+    int m_queriesPerThread = 1000;
     
     vector< int > v = veryLongVector();
-    auto range = addRange(v.begin(),v.end(),sizeCombination);
-    auto combinator = createCombinator(range);
+    auto m_range = addRange(v.begin(),v.end(),sizeCombination)->close();
+    auto combinator = Combinator(*m_range);
     
     MyThreadData data;
-    auto planner = slice(combinator, data, numThreads, queriesPerThread);
+    auto planner = slice(combinator, data, m_numThreads, m_queriesPerThread);
     typedef decltype(planner)::MyThreadInfo MyThreadInfo;
 
     planner.run( [&sizeCombinations](MyThreadInfo&& ti) mutable

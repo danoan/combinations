@@ -4,48 +4,43 @@
 #include <vector>
 #include <set>
 
-namespace magLac
-{
-    namespace LazyRecursive
-    {
-        template<class TElementType, class TElementIterator>
-        class LazyCombinator
-        {
-        public:
-            typedef std::vector<TElementType> CombinationSequence;
-            typedef unsigned long int Size;
+namespace magLac {
+namespace LazyRecursive {
+template<class TElementType, class TElementIterator>
+class LazyCombinator {
+ public:
+  typedef std::vector<TElementType> CombinationSequence;
 
-        private:
-            enum Status{FAILURE,CONTINUE,SUCCESS};
+ private:
+  enum Status { FAILURE, CONTINUE, SUCCESS };
 
-        public:
-            LazyCombinator(Size combSize,
-                    TElementIterator begin,
-                    TElementIterator end);
+ public:
+  LazyCombinator(size_t combSize,
+                 TElementIterator begin,
+                 TElementIterator end);
 
-            bool next(CombinationSequence& curr);
+  bool next(CombinationSequence &curr);
 
-        private:
-            Status rec_combinations(CombinationSequence& curr,
-                                    Size k,
-                                    TElementIterator begin,
-                                    TElementIterator end);
+ private:
+  Status rec_combinations(CombinationSequence &curr,
+                          size_t k,
+                          TElementIterator begin,
+                          TElementIterator end);
 
-        private:
-            Size combSize;
-            TElementIterator begin,end;
-            Size lastCombNum;
-            Size currCombNum;
-        };
+ private:
+  size_t combSize;
+  TElementIterator begin, end;
+  size_t lastCombNum;
+  size_t currCombNum;
+};
 
-
-
-        template<class TElementIterator,class TElementType=typename TElementIterator::value_type>
-        LazyCombinator<TElementType,TElementIterator> combinations(unsigned long int combSize,TElementIterator begin,TElementIterator end)
-        {
-            return LazyCombinator<TElementType,TElementIterator>(combSize,begin,end);
-        }
-    }
+template<class TElementIterator, class TElementType=typename TElementIterator::value_type>
+LazyCombinator<TElementType, TElementIterator> combinations(unsigned long int combSize,
+                                                            TElementIterator begin,
+                                                            TElementIterator end) {
+  return LazyCombinator<TElementType, TElementIterator>(combSize, begin, end);
+}
+}
 
 }
 

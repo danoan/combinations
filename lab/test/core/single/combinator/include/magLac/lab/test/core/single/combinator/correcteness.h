@@ -8,34 +8,29 @@
 #include "magLac/lab/logger/logger.h"
 #include "magLac/magLac.h"
 
-namespace magLac
-{
-    namespace Test
-    {
-        namespace SingleCombinator
-        {
-            typedef std::vector<std::string> StringVector;
+namespace magLac {
+namespace Test {
+namespace SingleCombinator {
+typedef std::vector<std::string> StringVector;
 
-            struct Element
-            {
-                Element(const StringVector &e1) : e1(e1) {}
+struct Element {
+  Element(const StringVector &e1) : e1(e1) {}
 
-                bool operator==(const Element& other) const
-                {
-                    return other.e1==e1;
-                }
+  bool operator==(const Element &other) const {
+    return other.e1 == e1;
+  }
 
-                friend std::ostream& operator<<(std::ostream& os, const Element& e);
+  friend std::ostream &operator<<(std::ostream &os, const Element &e);
 
-                StringVector e1;
-            };
+  StringVector e1;
+};
 
-            typedef std::unordered_set<Element> CombinationSet;
-            CombinationSet expectedCS();
+typedef std::unordered_set<Element> CombinationSet;
+CombinationSet expectedCS();
 
-            bool correcteness(Logger& logger);
-        }
-    }
+bool correcteness(Logger &logger);
+}
+}
 }
 
 #endif //MAGLAC_LAB_TEST_CORE_SINGLE_COMBINATOR_CORRECTENESS_H

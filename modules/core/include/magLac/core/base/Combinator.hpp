@@ -2,89 +2,73 @@
 
 template<class TRange>
 template<class TResolver>
-void Combinator<TRange>::setResolver(TResolver &resolver)
-{
-    setResolver(resolver, 0);
+void Combinator<TRange>::setResolver(TResolver& resolver) {
+  setResolver(resolver, 0);
 }
 
 template<class TRange>
 template<class TResolver>
-void Combinator<TRange>::setResolver(TResolver &resolver, Size proxyVectorIndex)
-{
+void Combinator<TRange>::setResolver(TResolver& resolver, size_t proxyVectorIndex) {
 
-    if (proxyVectorIndex < numRanges) {
-        resolver.set(fv[proxyVectorIndex].get());
-        setResolver(resolver.previousSolver, proxyVectorIndex + 1);
-    }
+  if (proxyVectorIndex < m_numRanges) {
+    resolver.set(m_fv[proxyVectorIndex].get());
+    setResolver( *(resolver.previousSolver), proxyVectorIndex + 1);
+  }
 
 }
 
-template<class TRange>
-typename Combinator<TRange>::MyResolver Combinator<TRange>::resolver()
-{
-    return MyResolver(range);
-}
 
 template<class TRange>
 Combinator<TRange>::Combinator(MyRange &range):
-        range(range),
-        numRanges(0)
-{
-    es.push(Event(Event::END, 0, 0));
-    es.push(Event(Event::DIVE, 0, 0));
+    m_range(range),
+    m_numRanges(0) {
+  m_es.push(Event(Event::END, 0, 0));
+  m_es.push(Event(Event::DIVE, 0, 0));
 
-    initializeFundamentalVector(fv, range);
-    numRanges = fv.size();
+  magLac::Private::initializeFundamentalVector(m_fv, range);
+  m_numRanges = m_fv.size();
+
+  m_resolver = new MyResolver(m_range);
 }
 
 template<class TRange>
-bool Combinator<TRange>::next(MyResolver &resolver)
-{
-    while (!es.empty())
-    {
-        Event e = es.top();
-        es.pop();
+bool Combinator<TRange>::next(MyResolver &resolver) {
+  while (!m_es.empty()) {
+    Event e = m_es.top();
+    m_es.pop();
 
-        switch (e.action)
-        {
-            case Event::DIVE:
-            {
-                if (e.cIndex >= this->numRanges)
-                {
-                    es.push(Event(Event::DONE, e.cIndex, 0));
-                } 
-                else
-                {   
-                    FundamentalCombinator &fc = fv[e.cIndex];
+    switch (e.action) {
+      case Event::DIVE: {
+        if (e.cIndex >= this->m_numRanges) {
+          m_es.push(Event(Event::DONE, e.cIndex, 0));
+        } else {
+          FundamentalCombinator &fc = m_fv[e.cIndex];
 
-                    if (fc.next()) {
-                        es.push(Event(Event::BRANCH, e.cIndex, 0));
-                        es.push(Event(Event::DIVE, e.cIndex + 1, 0));
-                    } else {
-                        fc.restart();
-                    }
-                    
-                }
-
-                break;
-            }
-            case Event::BRANCH:
-            {
-                es.push(Event(Event::DIVE, e.cIndex, 0));
-                break;
-            }
-            case Event::DONE:
-            {
-                setResolver(resolver);
-                return true;
-            }
-            case Event::END:
-            {
-                return false;
-            }
+          if (fc.next()) {
+            m_es.push(Event(Event::BRANCH, e.cIndex, 0));
+            m_es.push(Event(Event::DIVE, e.cIndex + 1, 0));
+          } else {
+            fc.restart();
+          }
 
         }
-    }
 
-    return false;
+        break;
+      }
+      case Event::BRANCH: {
+        m_es.push(Event(Event::DIVE, e.cIndex, 0));
+        break;
+      }
+      case Event::DONE: {
+        setResolver(resolver);
+        return true;
+      }
+      case Event::END: {
+        return false;
+      }
+
+    }
+  }
+
+  return false;
 }
