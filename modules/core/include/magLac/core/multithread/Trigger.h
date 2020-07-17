@@ -53,7 +53,7 @@ class Trigger {
   ~Trigger() {
     for (auto v:m_LCVector) delete v;
   }
-  
+
   ThreadDataVectorIterator begin() const{ return m_threadDataVector.begin(); }
   ThreadDataVectorIterator end() const{ return m_threadDataVector.end(); }
 
@@ -68,45 +68,41 @@ class Trigger {
     bool existsNext = true;
     do {
       std::unique_lock<std::mutex> lockNotify(this->m_mutexPoolStack);
+      m_cvPoolStack.wait(lockNotify,[this](){return this->m_threadPool.size() == this->m_numThreads; });
+      lockNotify.unlock();
 
-      {
-        while (!this->m_threadPool.empty()) {
-          int tPos = m_threadPool.top();
-          m_threadPool.pop();
+      while ( !this->m_threadPool.empty() && existsNext ) {
+        lockNotify.lock();
+        int tPos = m_threadPool.top();
+        m_threadPool.pop();
+        lockNotify.unlock();
 
-          delete m_LCVector[tPos];
-          m_LCVector[tPos] = new MyCombinator(combinatorModel);
+        delete m_LCVector[tPos];
+        m_LCVector[tPos] = new MyCombinator(combinatorModel);
 
-          m_threadDataVector[tPos].combinatorPt = m_LCVector[tPos];
-          m_threads[tPos] = std::thread(&Self::threadStart,
+        m_threadDataVector[tPos].combinatorPt = m_LCVector[tPos];
+        m_threads[tPos] = std::thread(&Self::threadStart,
                                       this,
                                       std::ref(m_threadDataVector[tPos]),
                                       ThreadControl(tPos, m_queriesPerThread),
                                       cbf);
-          m_threads[tPos].detach();
+        m_threads[tPos].detach();
 
-          for (size_t currSize = 0; currSize < m_queriesPerThread; ++currSize) {
-            existsNext = combinatorModel.next(mockValue);
-            if (!existsNext) break;
-          }
-          if (!existsNext) break;
+        for (size_t currSize = 0; currSize < m_queriesPerThread; ++currSize) {
+          existsNext = combinatorModel.next(mockValue);
         }
+
       }
-      m_cvPoolStack.wait(lockNotify);
+
     } while (existsNext);
 
-    bool childRunning = true;
-    while (childRunning) {
-      std::unique_lock<std::mutex> lockNotify(this->m_mutexPoolStack);
-      if (this->m_threadPool.size() != m_numThreads) {
-        m_cvPoolStack.wait(lockNotify);
-      } else {
-        childRunning = false;
-      }
+    std::unique_lock<std::mutex> lockNotify(this->m_mutexPoolStack);
+    while (this->m_threadPool.size() != this->m_numThreads) {
+      m_cvPoolStack.wait(lockNotify,[this](){return this->m_threadPool.size() == this->m_numThreads; });
     }
 
   }
-  
+
  private:
 
   void threadStart(MyDataChunk &dc, ThreadControl tc, CallbackFunction cbf) {
@@ -131,7 +127,7 @@ class Trigger {
     this->m_threadPool.push(tc.vectorPos);
     this->m_cvPoolStack.notify_one();
   }
-  
+
 
  private:
   size_t m_numThreads;
